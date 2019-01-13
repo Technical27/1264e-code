@@ -1,0 +1,6 @@
+/bin
+/firmware
+/include
+common.mk
+Makefile
+project.pros
