@@ -1,6 +1,6 @@
 #include "main.h"
-extern MotorGroup leftSide ({2, 3});
-extern MotorGroup rightSide ({4, 5});
+extern MotorGroup leftSide ({Motor(2, false, AbstractMotor::gearset::green), Motor(3, false, AbstractMotor::gearset::green)});
+extern MotorGroup rightSide ({Motor(4, true, AbstractMotor::gearset::green), Motor(5, true, AbstractMotor::gearset::green)});
 extern Motor intake (6, false, AbstractMotor::gearset::green);
 extern ChassisControllerIntegrated chassis = ChassisControllerFactory::create(leftSide, rightSide, AbstractMotor::gearset::green);
 extern bool autonEnabled = true;
@@ -14,12 +14,8 @@ string status = "Disabled";
 
 lv_res_t autonEnabler (lv_obj_t * btn) {
   autonEnabled = !autonEnabled;
-  if (autonEnabled) {
-    lv_label_set_text(autonEnableLabel, "Auton Enabled" SYMBOL_OK);
-  }
-  else {
-    lv_label_set_text(autonEnableLabel, "Auton Disabled" SYMBOL_CLOSE);
-  }
+  if (autonEnabled) lv_label_set_text(autonEnableLabel, "Auton Enabled" SYMBOL_OK);
+  else lv_label_set_text(autonEnableLabel, "Auton Disabled" SYMBOL_CLOSE);
   return LV_RES_OK;
 }
 
