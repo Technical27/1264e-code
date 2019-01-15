@@ -17,7 +17,7 @@ void intakeControl (void * param) {
 void opcontrol() {
 	pros::Task intakeTask (intakeControl);
 	while (true) {
-		chassis.tank(controller.getAnalog(ControllerAnalog::leftX), controller.getAnalog(ControllerAnalog::rightX), 0.8);
+		chassis.tank(controller.getAnalog(ControllerAnalog::leftY), controller.getAnalog(ControllerAnalog::rightY), 0.8);
 		pros::Task::delay(10);
 	}
 }

@@ -29,6 +29,7 @@ void screenController (void * param) {
     else if (pros::competition::is_autonomous()) status = "Autonomous";
     else status = "Driver Control";
     lv_label_set_text(competitionStatus, status.c_str());
+    pros::Task::delay(100);
   }
 }
 
