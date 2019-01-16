@@ -25,7 +25,7 @@ lv_res_t autonEnabler (lv_obj_t * btn) {
 void screenController (void * param) {
   lv_ddlist_set_options(allianceSelectList, "Red\nBlue");
   lv_ddlist_set_options(sideSelectList, "Front\nBack");
-  lv_ddlist_set_options(autonSelectList, "Normal\nSkills")
+  lv_ddlist_set_options(autonSelectList, "Normal\nSkills");
   lv_obj_align(allianceSelectList, autonTab, LV_ALIGN_IN_TOP_RIGHT, 0, 0);
   lv_obj_align(autonSelectList, autonTab, LV_ALIGN_IN_RIGHT_MID, 0, 0);
   lv_obj_align(sideSelectList, autonTab, LV_ALIGN_IN_BOTTOM_RIGHT, 0, 0);
