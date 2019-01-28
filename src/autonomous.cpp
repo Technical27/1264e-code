@@ -28,7 +28,12 @@ void autonomous() {
         chassis.moveDistance(-125);// Drive to the platform
         chassis.moveDistance(1700);
       }
-      else if (side == 1) {}
+      else if (side == 1) {
+        intake.moveVoltage(12000);
+        chassis.moveDistance(500);
+        intake.moveVoltage(0);
+        chassis.moveDistance(-600);
+      }
     }
     else if (program == 1) {
       chassis.moveDistance(1500);// Go to flag and back
