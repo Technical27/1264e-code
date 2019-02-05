@@ -1,0 +1,110 @@
+[1mdiff --git a/src/autonomous.cpp b/src/autonomous.cpp[m
+[1mindex b3411f0..3a5e7b8 100644[m
+[1m--- a/src/autonomous.cpp[m
+[1m+++ b/src/autonomous.cpp[m
+[36m@@ -1,4 +1,5 @@[m
+ #include "main.h"[m
+[32m+[m[32m//importing global variables[m
+ extern MotorGroup leftSide;[m
+ extern MotorGroup rightSide;[m
+ extern ChassisControllerIntegrated chassis;[m
+[36m@@ -10,11 +11,15 @@[m [mextern lv_obj_t * autonSelectList;[m
+ extern Motor intake;[m
+ [m
+ void autonomous() {[m
+[32m+[m[32m  //disables the auton enable button[m
+   lv_btn_set_state(autonEnable, LV_BTN_STATE_INA);[m
+   if (autonEnabled) {[m
+[32m+[m[32m    //gets the selected item from the lists[m
+     int program = lv_ddlist_get_selected(autonSelectList);[m
+     int alliance = lv_ddlist_get_selected(allianceSelectList);[m
+     int side = lv_ddlist_get_selected(sideSelectList);[m
+[32m+[m
+[32m+[m[32m    //uses conditions to check for side, alliance, and if it is normal or skills[m
+     if (program == 0) {[m
+       if (side == 0) {[m
+         chassis.moveDistance(1500);// Go to flag and back[m
+[36m@@ -45,6 +50,7 @@[m [mvoid autonomous() {[m
+ [m
+       chassis.moveDistance(-125);// Drive to the platform[m
+       chassis.moveDistance(2500);[m
+[32m+[m[32m      //WIP skills auton[m
+       /*chassis.moveDistance(1500);[m
+       pros::Task::delay(250);// Go and hit first flag and go back a bit[m
+       chassis.moveDistance(-500);[m
+[1mdiff --git a/src/initialize.cpp b/src/initialize.cpp[m
+[1mindex 48ada69..063735d 100644[m
+[1m--- a/src/initialize.cpp[m
+[1m+++ b/src/initialize.cpp[m
+[36m@@ -1,4 +1,5 @@[m
+ #include "main.h"[m
+[32m+[m[32m//creating and externing global variables[m
+ extern MotorGroup leftSide ({Motor(2, false, AbstractMotor::gearset::green), Motor(3, false, AbstractMotor::gearset::green)});[m
+ extern MotorGroup rightSide ({Motor(4, true, AbstractMotor::gearset::green), Motor(5, true, AbstractMotor::gearset::green)});[m
+ extern Motor intake (6, false, AbstractMotor::gearset::green);[m
+[36m@@ -15,6 +16,7 @@[m [mextern lv_obj_t * sideSelectList = lv_ddlist_create(autonTab, NULL);[m
+ extern lv_obj_t * autonSelectList = lv_ddlist_create(autonTab, NULL);[m
+ string status = "Disabled";[m
+ [m
+[32m+[m[32m//function to handle the button pressing to enable and disable auton[m
+ lv_res_t autonEnabler (lv_obj_t * btn) {[m
+   autonEnabled = !autonEnabled;[m
+   if (autonEnabled) lv_label_set_text(autonEnableLabel, "Auton Enabled " SYMBOL_OK);[m
+[36m@@ -23,32 +25,40 @@[m [mlv_res_t autonEnabler (lv_obj_t * btn) {[m
+ }[m
+ [m
+ void screenController (void * param) {[m
+[31m-  lv_ddlist_set_options(allianceSelectList, "Red\nBlue");//Setup for display elements[m
+[32m+[m[32m  //Setup for display elements[m
+[32m+[m[32m  lv_ddlist_set_options(allianceSelectList, "Red\nBlue");[m
+   lv_ddlist_set_options(sideSelectList, "Front\nBack");[m
+   lv_ddlist_set_options(autonSelectList, "Normal\nSkills");[m
+[32m+[m
+   lv_obj_set_size(autonEnable, 175, 50);[m
+[31m-  lv_obj_align(allianceSelectList, autonTab, LV_ALIGN_IN_TOP_RIGHT, 0, 0);[m
+[31m-  lv_obj_align(autonSelectList, autonTab, LV_ALIGN_IN_TOP_MID, 0, 0);[m
+[31m-  lv_obj_align(sideSelectList, autonTab, LV_ALIGN_IN_TOP_LEFT, 15, 0);[m
+[31m-  lv_obj_align(autonEnable, autonTab, LV_ALIGN_IN_BOTTOM_MID, 0, 10);[m
+[32m+[m[32m  lv_obj_set_pos(allianceSelectList, 50, 10);[m
+[32m+[m[32m  lv_obj_set_pos(autonSelectList, 200, 10);[m
+[32m+[m[32m  lv_obj_set_pos(sideSelectList, 350, 10);[m
+[32m+[m[32m  lv_obj_set_pos(autonEnable, 150, 100);[m
+[32m+[m
+   lv_label_set_text(autonEnableLabel, "Auton Enabled " SYMBOL_OK);[m
+   lv_btn_set_action(autonEnable, LV_BTN_ACTION_CLICK, autonEnabler);[m
+[32m+[m
+   lv_obj_align(autonEnableLabel, autonEnable, LV_ALIGN_CENTER, 0, 0);[m
+   lv_obj_align(competitionStatus, telemetryTab, LV_ALIGN_CENTER, 0, 0);[m
+[31m-[m
+[32m+[m[32m  //loop to control display elements[m
+   while (true) {[m
+     if (pros::competition::is_disabled()) status = "Disabled";[m
+     else if (pros::competition::is_autonomous()) status = "Autonomous";[m
+     else status = "Driver Control";[m
+     lv_label_set_text(competitionStatus, status.c_str());[m
+[31m-    pros::Task::delay(100);[m
+[32m+[m[32m    lv_obj_align(competitionStatus, telemetryTab, LV_ALIGN_CENTER, 0, 0);[m
+[32m+[m[32m    pros::Task::delay(500);[m
+   }[m
+ }[m
+ [m
+ void initialize () {[m
+[32m+[m[32m  // initialize the display and control display elements[m
+   pros::Task screenTask (screenController);[m
+ }[m
+ [m
+[32m+[m
+[32m+[m[32m// currnetly not using these functions[m
+ void disabled () {}[m
+ [m
+ void competition_initialize () {}[m
+[1mdiff --git a/src/opcontrol.cpp b/src/opcontrol.cpp[m
+[1mindex aaeaaec..d32a204 100644[m
+[1m--- a/src/opcontrol.cpp[m
+[1m+++ b/src/opcontrol.cpp[m
+[36m@@ -1,4 +1,5 @@[m
+ #include "main.h"[m
+[32m+[m[32m//importing/creating all variables[m
+ extern MotorGroup leftSide;[m
+ extern MotorGroup rightSide;[m
+ extern Motor intake;[m

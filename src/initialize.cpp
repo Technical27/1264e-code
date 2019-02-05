@@ -1,4 +1,5 @@
 #include "main.h"
+//creating and externing global variables
 extern MotorGroup leftSide ({Motor(2, false, AbstractMotor::gearset::green), Motor(3, false, AbstractMotor::gearset::green)});
 extern MotorGroup rightSide ({Motor(4, true, AbstractMotor::gearset::green), Motor(5, true, AbstractMotor::gearset::green)});
 extern Motor intake (6, false, AbstractMotor::gearset::green);
@@ -15,6 +16,7 @@ extern lv_obj_t * sideSelectList = lv_ddlist_create(autonTab, NULL);
 extern lv_obj_t * autonSelectList = lv_ddlist_create(autonTab, NULL);
 string status = "Disabled";
 
+//function to handle the button pressing to enable and disable auton
 lv_res_t autonEnabler (lv_obj_t * btn) {
   autonEnabled = !autonEnabled;
   if (autonEnabled) lv_label_set_text(autonEnableLabel, "Auton Enabled " SYMBOL_OK);
@@ -23,32 +25,40 @@ lv_res_t autonEnabler (lv_obj_t * btn) {
 }
 
 void screenController (void * param) {
-  lv_ddlist_set_options(allianceSelectList, "Red\nBlue");//Setup for display elements
+  //Setup for display elements
+  lv_ddlist_set_options(allianceSelectList, "Red\nBlue");
   lv_ddlist_set_options(sideSelectList, "Front\nBack");
   lv_ddlist_set_options(autonSelectList, "Normal\nSkills");
+
   lv_obj_set_size(autonEnable, 175, 50);
-  lv_obj_align(allianceSelectList, autonTab, LV_ALIGN_IN_TOP_RIGHT, 0, 0);
-  lv_obj_align(autonSelectList, autonTab, LV_ALIGN_IN_TOP_MID, 0, 0);
-  lv_obj_align(sideSelectList, autonTab, LV_ALIGN_IN_TOP_LEFT, 15, 0);
-  lv_obj_align(autonEnable, autonTab, LV_ALIGN_IN_BOTTOM_MID, 0, 10);
+  lv_obj_set_pos(allianceSelectList, 50, 10);
+  lv_obj_set_pos(autonSelectList, 200, 10);
+  lv_obj_set_pos(sideSelectList, 350, 10);
+  lv_obj_set_pos(autonEnable, 150, 100);
+
   lv_label_set_text(autonEnableLabel, "Auton Enabled " SYMBOL_OK);
   lv_btn_set_action(autonEnable, LV_BTN_ACTION_CLICK, autonEnabler);
+
   lv_obj_align(autonEnableLabel, autonEnable, LV_ALIGN_CENTER, 0, 0);
   lv_obj_align(competitionStatus, telemetryTab, LV_ALIGN_CENTER, 0, 0);
-
+  //loop to control display elements
   while (true) {
     if (pros::competition::is_disabled()) status = "Disabled";
     else if (pros::competition::is_autonomous()) status = "Autonomous";
     else status = "Driver Control";
     lv_label_set_text(competitionStatus, status.c_str());
-    pros::Task::delay(100);
+    lv_obj_align(competitionStatus, telemetryTab, LV_ALIGN_CENTER, 0, 0);
+    pros::Task::delay(500);
   }
 }
 
 void initialize () {
+  // initialize the display and control display elements
   pros::Task screenTask (screenController);
 }
 
+
+// currnetly not using these functions
 void disabled () {}
 
 void competition_initialize () {}

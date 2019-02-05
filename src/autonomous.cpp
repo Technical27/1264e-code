@@ -1,4 +1,5 @@
 #include "main.h"
+//importing global variables
 extern MotorGroup leftSide;
 extern MotorGroup rightSide;
 extern ChassisControllerIntegrated chassis;
@@ -10,11 +11,15 @@ extern lv_obj_t * autonSelectList;
 extern Motor intake;
 
 void autonomous() {
+  //disables the auton enable button
   lv_btn_set_state(autonEnable, LV_BTN_STATE_INA);
   if (autonEnabled) {
+    //gets the selected item from the lists
     int program = lv_ddlist_get_selected(autonSelectList);
     int alliance = lv_ddlist_get_selected(allianceSelectList);
     int side = lv_ddlist_get_selected(sideSelectList);
+
+    //uses conditions to check for side, alliance, and if it is normal or skills
     if (program == 0) {
       if (side == 0) {
         chassis.moveDistance(1500);// Go to flag and back
@@ -45,6 +50,7 @@ void autonomous() {
 
       chassis.moveDistance(-125);// Drive to the platform
       chassis.moveDistance(2500);
+      //WIP skills auton
       /*chassis.moveDistance(1500);
       pros::Task::delay(250);// Go and hit first flag and go back a bit
       chassis.moveDistance(-500);

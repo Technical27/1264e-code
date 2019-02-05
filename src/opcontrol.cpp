@@ -1,4 +1,5 @@
 #include "main.h"
+//importing/creating all variables
 extern MotorGroup leftSide;
 extern MotorGroup rightSide;
 extern Motor intake;
