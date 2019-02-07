@@ -3,6 +3,7 @@
 extern MotorGroup leftSide ({Motor(2, false, AbstractMotor::gearset::green), Motor(3, false, AbstractMotor::gearset::green)});
 extern MotorGroup rightSide ({Motor(4, true, AbstractMotor::gearset::green), Motor(5, true, AbstractMotor::gearset::green)});
 extern Motor intake (6, false, AbstractMotor::gearset::green);
+extern Motor launcher (7, false, AbstractMotor::gearset::red);
 extern ChassisControllerIntegrated chassis = ChassisControllerFactory::create(leftSide, rightSide, AbstractMotor::gearset::green, {4_in, 15_in});
 extern bool autonEnabled = true;
 extern lv_obj_t * tabs = lv_tabview_create(lv_scr_act(), NULL);
