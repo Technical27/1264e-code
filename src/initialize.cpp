@@ -5,7 +5,7 @@ extern MotorGroup rightSide ({Motor(4, true, AbstractMotor::gearset::green), Mot
 extern Motor intake (6, false, AbstractMotor::gearset::green);
 extern ChassisControllerIntegrated chassis = ChassisControllerFactory::create(leftSide, rightSide, AbstractMotor::gearset::green);
 extern bool autonEnabled = true;
-lv_obj_t * tabs = lv_tabview_create(lv_scr_act(), NULL);
+extern lv_obj_t * tabs = lv_tabview_create(lv_scr_act(), NULL);
 lv_obj_t * autonTab = lv_tabview_add_tab(tabs, "Auton");
 lv_obj_t * telemetryTab = lv_tabview_add_tab(tabs, "Telemetry");
 lv_obj_t * autonEnableLabel = lv_label_create(autonTab, NULL);

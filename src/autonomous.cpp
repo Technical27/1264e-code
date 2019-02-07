@@ -9,10 +9,13 @@ extern lv_obj_t * sideSelectList;
 extern lv_obj_t * allianceSelectList;
 extern lv_obj_t * autonSelectList;
 extern Motor intake;
+extern lv_obj_t * tabs;
 
 void autonomous() {
   //disables the auton enable button
   lv_btn_set_state(autonEnable, LV_BTN_STATE_INA);
+  //changes to the telemetry in the tabview
+  lv_tabview_set_tab_act(tabs, 1);
   if (autonEnabled) {
     //gets the selected item from the lists
     int program = lv_ddlist_get_selected(autonSelectList);
