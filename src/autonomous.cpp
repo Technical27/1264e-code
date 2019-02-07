@@ -13,7 +13,7 @@ extern lv_obj_t * tabs;
 
 void autonomous() {
   //disables the auton enable button
-  lv_btn_set_state(autonEnable, LV_BTN_STATE_INA);
+  lv_btn_set_state(autonEnable, LV_BTN_STATE_INA, true);
   //changes to the telemetry in the tabview
   lv_tabview_set_tab_act(tabs, 1);
   if (autonEnabled) {
