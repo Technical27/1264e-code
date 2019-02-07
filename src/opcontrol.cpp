@@ -3,6 +3,7 @@
 extern MotorGroup leftSide;
 extern MotorGroup rightSide;
 extern Motor intake;
+extern Motor launcher;
 extern ChassisControllerIntegrated chassis;
 Controller mainController (ControllerId::master);
 Controller auxController (ControllerId::partner);
@@ -21,10 +22,17 @@ void liftControl (void * param) {
 
 }
 
+void launcherControl (void * param) {
+  while (true) {
+    if (mainController.getDigital(ControllerDigital::L2) && launcher.getTargetPosition() == 0) launcher.moveRelative(300, 100);
+  }
+}
+
 void opcontrol() {
   //tasks to control other functions
   pros::Task intakeTask (intakeControl);
   pros::Task liftTask (liftControl);
+  pros::Task launcherTask (launcherControl);
   //loop to control the drive train
   while (true) {
     chassis.tank(mainController.getAnalog(ControllerAnalog::leftY), mainController.getAnalog(ControllerAnalog::rightY), 0.2);
