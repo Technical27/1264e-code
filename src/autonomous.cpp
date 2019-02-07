@@ -30,8 +30,8 @@ void autonomous() {
         chassis.moveDistance(-1990);
         pros::Task::delay(1000);
 
-        if (alliance == 0) chassis.turnAngle(290);// Turn to the platform
-        else if (alliance == 1) chassis.turnAngle(-290);
+        if (alliance == 0) chassis.turnAngle(90_deg);// Turn to the platform
+        else if (alliance == 1) chassis.turnAngle(-90_deg);
 
         chassis.moveDistance(-125);// Drive to the platform
         chassis.moveDistance(1700);
@@ -49,7 +49,7 @@ void autonomous() {
       chassis.moveDistance(-1990);
       pros::Task::delay(1000);
 
-      chassis.turnAngle(290);// Turn to the platform
+      chassis.turnAngle(90_deg);// Turn to the platform
 
       chassis.moveDistance(-125);// Drive to the platform
       chassis.moveDistance(2500);
