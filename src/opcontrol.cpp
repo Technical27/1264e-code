@@ -24,14 +24,14 @@ void liftControl (void * param) {
     else if (auxController.getDigital(ControllerDigital::L2)) lift.moveVoltage(-12000);
     else lift.moveVoltage(0);
 
-    if (auxController.getDigital(ControllerDigital::R1) && liftTilt.getTargetPosition() == 0) liftTilt.moveRelative(255, 100);
-    else if (auxController.getDigital(ControllerDigital::R2) && liftTilt.getTargetPosition() == 0) liftTilt.moveRelative(-225, 100);
+    if (auxController.getDigital(ControllerDigital::R1) && liftTilt.getTargetPosition() == 0) liftTilt.moveRelative(1350, 100);
+    else if (auxController.getDigital(ControllerDigital::R2) && liftTilt.getTargetPosition() == 0) liftTilt.moveRelative(-1350, 100);
   }
 }
 
 void launcherControl (void * param) {
   while (true) {
-    if (mainController.getDigital(ControllerDigital::L2) && launcher.getTargetPosition() == 0) launcher.moveRelative(300, 100);
+    if (mainController.getDigital(ControllerDigital::L2) && launcher.getTargetPosition() == 0) launcher.moveRelative(1800, 100);
   }
 }
 
