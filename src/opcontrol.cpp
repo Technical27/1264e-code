@@ -2,6 +2,8 @@
 //global variables
 extern Motor intake;
 extern Motor launcher;
+extern Motor lift;
+extern Motor liftTilt;
 extern ChassisControllerIntegrated chassis;
 Controller mainController (ControllerId::master);
 Controller auxController (ControllerId::partner);
@@ -17,7 +19,14 @@ void intakeControl (void * param) {
 }
 
 void liftControl (void * param) {
+  while (true) {
+    if (auxController.getDigital(ControllerDigital::L1)) lift.moveVoltage(12000);
+    else if (auxController.getDigital(ControllerDigital::L2)) lift.moveVoltage(-12000);
+    else lift.moveVoltage(0);
 
+    if (auxController.getDigital(ControllerDigital::R1) && liftTilt.getTargetPosition() == 0) liftTilt.moveRelative(255, 100);
+    else if (auxController.getDigital(ControllerDigital::R2) && liftTilt.getTargetPosition() == 0) liftTilt.moveRelative(-225, 100);
+  }
 }
 
 void launcherControl (void * param) {
