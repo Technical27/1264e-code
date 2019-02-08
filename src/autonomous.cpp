@@ -1,15 +1,14 @@
 #include "main.h"
-//importing global variables
-extern MotorGroup leftSide;
-extern MotorGroup rightSide;
+//global variables
+extern Motor intake;
+extern Motor launcher;
 extern ChassisControllerIntegrated chassis;
 extern bool autonEnabled;
-extern lv_obj_t * autonEnable;
-extern lv_obj_t * sideSelectList;
-extern lv_obj_t * allianceSelectList;
-extern lv_obj_t * autonSelectList;
-extern Motor intake;
 extern lv_obj_t * tabs;
+extern lv_obj_t * autonEnable;
+extern lv_obj_t * allianceSelectList;
+extern lv_obj_t * sideSelectList;
+extern lv_obj_t * autonSelectList;
 
 void autonomous() {
   //disables the auton enable button

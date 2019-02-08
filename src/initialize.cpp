@@ -1,5 +1,5 @@
 #include "main.h"
-//creating and externing global variables
+//global variables
 extern MotorGroup leftSide ({Motor(2, false, AbstractMotor::gearset::green), Motor(3, false, AbstractMotor::gearset::green)});
 extern MotorGroup rightSide ({Motor(4, true, AbstractMotor::gearset::green), Motor(5, true, AbstractMotor::gearset::green)});
 extern Motor intake (6, false, AbstractMotor::gearset::green);
@@ -7,14 +7,15 @@ extern Motor launcher (7, false, AbstractMotor::gearset::red);
 extern ChassisControllerIntegrated chassis = ChassisControllerFactory::create(leftSide, rightSide, AbstractMotor::gearset::green, {4_in, 15_in});
 extern bool autonEnabled = true;
 extern lv_obj_t * tabs = lv_tabview_create(lv_scr_act(), NULL);
-lv_obj_t * autonTab = lv_tabview_add_tab(tabs, "Auton");
-lv_obj_t * telemetryTab = lv_tabview_add_tab(tabs, "Telemetry");
-lv_obj_t * autonEnableLabel = lv_label_create(autonTab, NULL);
+extern lv_obj_t * autonTab = lv_tabview_add_tab(tabs, "Auton");
+extern lv_obj_t * telemetryTab = lv_tabview_add_tab(tabs, "Telemetry");
+extern lv_obj_t * autonEnableLabel = lv_label_create(autonTab, NULL);
 extern lv_obj_t * autonEnable = lv_btn_create(autonTab, NULL);
-lv_obj_t * competitionStatus = lv_label_create(telemetryTab, NULL);
+extern lv_obj_t * competitionStatus = lv_label_create(telemetryTab, NULL);
 extern lv_obj_t * allianceSelectList = lv_ddlist_create(autonTab, NULL);
 extern lv_obj_t * sideSelectList = lv_ddlist_create(autonTab, NULL);
 extern lv_obj_t * autonSelectList = lv_ddlist_create(autonTab, NULL);
+
 string status = "Disabled";
 
 //function to handle the button pressing to enable and disable auton
@@ -25,7 +26,7 @@ lv_res_t autonEnabler (lv_obj_t * btn) {
   return LV_RES_OK;
 }
 
-void screenController (void * param) {
+void displayInit () {
   //Setup for display elements
   lv_ddlist_set_options(allianceSelectList, "Red\nBlue");
   lv_ddlist_set_options(sideSelectList, "Front\nBack");
@@ -42,6 +43,10 @@ void screenController (void * param) {
 
   lv_obj_align(autonEnableLabel, autonEnable, LV_ALIGN_CENTER, 0, 0);
   lv_obj_align(competitionStatus, telemetryTab, LV_ALIGN_CENTER, 0, 0);
+}
+
+void screenController (void * param) {
+  displayInit();
   //loop to control display elements
   while (true) {
     if (pros::competition::is_disabled()) status = "Disabled";

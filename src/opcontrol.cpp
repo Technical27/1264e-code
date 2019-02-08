@@ -1,7 +1,5 @@
 #include "main.h"
-//importing/creating all variables
-extern MotorGroup leftSide;
-extern MotorGroup rightSide;
+//global variables
 extern Motor intake;
 extern Motor launcher;
 extern ChassisControllerIntegrated chassis;
