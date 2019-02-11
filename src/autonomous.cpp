@@ -24,6 +24,7 @@ void autonomous() {
     //uses conditions to check for side, alliance, and if it is normal or skills
     if (program == 0) {
       if (side == 0) {
+        launcher.moveRelative(1800, 100);
         chassis.moveDistance(1500);// Go to flag and back
         pros::Task::delay(250);
         chassis.moveDistance(-1990);
@@ -43,6 +44,7 @@ void autonomous() {
       }
     }
     else if (program == 1) {
+      launcher.moveRelative(1800, 100);
       chassis.moveDistance(1500);// Go to flag and back
       pros::Task::delay(250);
       chassis.moveDistance(-1990);
