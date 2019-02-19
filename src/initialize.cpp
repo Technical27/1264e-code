@@ -7,29 +7,40 @@ extern Motor launcher (7, false, AbstractMotor::gearset::red);
 extern Motor lift (8, true, AbstractMotor::gearset::red);
 extern Motor liftTilt (9, false, AbstractMotor::gearset::red);
 extern ChassisControllerIntegrated chassis = ChassisControllerFactory::create(leftSide, rightSide, AbstractMotor::gearset::green, {4_in, 15_in});
-extern bool autonEnabled = true;
-extern lv_obj_t * tabs = lv_tabview_create(lv_scr_act(), NULL);
-extern lv_obj_t * autonTab = lv_tabview_add_tab(tabs, "Auton");
-extern lv_obj_t * telemetryTab = lv_tabview_add_tab(tabs, "Telemetry");
-extern lv_obj_t * autonEnableLabel = lv_label_create(autonTab, NULL);
-extern lv_obj_t * autonEnable = lv_btn_create(autonTab, NULL);
-extern lv_obj_t * competitionStatus = lv_label_create(telemetryTab, NULL);
-extern lv_obj_t * allianceSelectList = lv_ddlist_create(autonTab, NULL);
-extern lv_obj_t * sideSelectList = lv_ddlist_create(autonTab, NULL);
-extern lv_obj_t * autonSelectList = lv_ddlist_create(autonTab, NULL);
+// extern bool autonEnabled = true;
+// lv_obj_t * tabs = lv_tabview_create(lv_scr_act(), NULL);
+// lv_obj_t * autonTab = lv_tabview_add_tab(tabs, "Auton");
+// lv_obj_t * telemetryTab = lv_tabview_add_tab(tabs, "Telemetry");
+// extern lv_obj_t * autonEnableLabel = lv_label_create(autonTab, NULL);
+// lv_obj_t * autonEnable = lv_btn_create(autonTab, NULL);
+// lv_obj_t * competitionStatus = lv_label_create(telemetryTab, NULL);
+// extern lv_obj_t * allianceSelectList = lv_ddlist_create(autonTab, NULL);
+// extern lv_obj_t * sideSelectList = lv_ddlist_create(autonTab, NULL);
+// extern lv_obj_t * autonSelectList = lv_ddlist_create(autonTab, NULL);
+bool initCompleted = false;
 
 string status = "Disabled";
 
 //function to handle the button pressing to enable and disable auton
-lv_res_t autonEnabler (lv_obj_t * btn) {
+/*lv_res_t autonEnabler (lv_obj_t * btn) {
   autonEnabled = !autonEnabled;
   if (autonEnabled) lv_label_set_text(autonEnableLabel, "Auton Enabled " SYMBOL_OK);
   else lv_label_set_text(autonEnableLabel, "Auton Disabled " SYMBOL_CLOSE);
   return LV_RES_OK;
+}*/
+
+void init () {
+  if (!initCompleted) {
+    launcher.moveRelative(800, 100);
+    lift.setBrakeMode(AbstractMotor::brakeMode::hold);
+    liftTilt.setBrakeMode(AbstractMotor::brakeMode::hold);
+    launcher.setBrakeMode(AbstractMotor::brakeMode::hold);
+    initCompleted = true;
+  }
 }
 
-void displayInit () {
-  //Setup for display elements
+/*void screenController (void * param) {
+  //setup for display elements
   lv_ddlist_set_options(allianceSelectList, "Red\nBlue");
   lv_ddlist_set_options(sideSelectList, "Front\nBack");
   lv_ddlist_set_options(autonSelectList, "Normal\nSkills");
@@ -45,27 +56,9 @@ void displayInit () {
 
   lv_obj_align(autonEnableLabel, autonEnable, LV_ALIGN_CENTER, 0, 0);
   lv_obj_align(competitionStatus, telemetryTab, LV_ALIGN_CENTER, 0, 0);
-}
+}*/
 
-void screenController (void * param) {
-  displayInit();
-  //loop to control display elements
-  while (true) {
-    if (pros::competition::is_disabled()) status = "Disabled";
-    else if (pros::competition::is_autonomous()) status = "Autonomous";
-    else status = "Driver Control";
-    lv_label_set_text(competitionStatus, status.c_str());
-    lv_obj_align(competitionStatus, telemetryTab, LV_ALIGN_CENTER, 0, 0);
-    pros::Task::delay(500);
-  }
-}
-
-void initialize () {
-  // initialize the display and control display elements
-  pros::Task screenTask (screenController);
-  lift.setBrakeMode(AbstractMotor::brakeMode::hold);
-  liftTilt.setBrakeMode(AbstractMotor::brakeMode::hold);
-}
+void initialize () {}
 
 
 // currnetly not using these functions
