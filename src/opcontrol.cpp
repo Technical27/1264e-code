@@ -8,13 +8,19 @@ extern ChassisControllerIntegrated chassis;
 Controller mainController (ControllerId::master);
 Controller auxController (ControllerId::partner);
 bool reversed = false;
+bool rev = false;
+pros::Mutex intakeMutex;
 
 void intakeControl (void * param) {
   //loop to control intake motor
   while (true) {
-    if (mainController.getDigital(ControllerDigital::R1)) intake.moveVoltage(12000);
-    else if (mainController.getDigital(ControllerDigital::R2)) intake.moveVoltage(-12000);
-    else intake.moveVoltage(0);
+    if (intakeMutex.take(0)) {
+      intakeMutex.take(100);
+      if (mainController.getDigital(ControllerDigital::R1)) intake.moveVoltage(12000);
+      else if (mainController.getDigital(ControllerDigital::R2)) intake.moveVoltage(-12000);
+      else intake.moveVoltage(0);
+      intakeMutex.give();
+    }
     pros::Task::delay(10);
   }
 }
@@ -34,6 +40,14 @@ void liftControl (void * param) {
 void launcherControl (void * param) {
   while (true) {
     if (mainController.getDigital(ControllerDigital::L2)) launcher.moveRelative(1800, 100);
+    if (mainController.getDigital(ControllerDigital::A) && intakeMutex.take(0)) {
+      intakeMutex.take(500);
+      intake.moveVoltage(-12000);
+      launcher.moveRelative(1800, 100);
+      pros::Task::delay(100);
+      pros::Task::delay(500);
+      intakeMutex.give();
+    }
   }
 }
 
@@ -46,6 +60,7 @@ void driveControl (void * param) {
 }
 
 void opcontrol() {
+  init();
   //tasks to control other functions
   pros::Task intakeTask (intakeControl);
   pros::Task liftTask (liftControl);
@@ -53,7 +68,15 @@ void opcontrol() {
   pros::Task driveTask (driveControl);
   //loop to control the drive train
   while (true) {
-    if (mainController.getDigital(ControllerDigital::L1)) reversed = !reversed;
-    pros::Task::delay(50);
+    while (mainController.getDigital(ControllerDigital::L1)) {
+      rev = false;
+      pros::Task::delay(500);
+      rev = true;
+      mainController.rumble(".");
+      while (mainController.getDigital(ControllerDigital::L1)) pros::Task::delay(10);
+    }
+    if (rev) reversed = !reversed;
+    rev = false;
+    pros::Task::delay(10);
   }
 }
