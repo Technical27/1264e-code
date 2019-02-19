@@ -69,7 +69,6 @@ void opcontrol() {
   //loop to control the drive train
   while (true) {
     while (mainController.getDigital(ControllerDigital::L1)) {
-      rev = false;
       pros::Task::delay(500);
       rev = true;
       mainController.rumble(".");
