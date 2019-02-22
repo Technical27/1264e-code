@@ -53,8 +53,7 @@ void launcherControl (void * param) {
 
 void driveControl (void * param) {
   while (true) {
-    if (!reversed) chassis.tank(mainController.getAnalog(ControllerAnalog::leftY), mainController.getAnalog(ControllerAnalog::rightY), 0.2);
-    else if (reversed) chassis.tank(-mainController.getAnalog(ControllerAnalog::rightY), -mainController.getAnalog(ControllerAnalog::leftY), 0.2);
+    chassis.tank(mainController.getAnalog(ControllerAnalog::leftY), mainController.getAnalog(ControllerAnalog::rightY), 0.2);
     pros::Task::delay(10);
   }
 }
@@ -67,15 +66,5 @@ void opcontrol() {
   pros::Task launcherTask (launcherControl);
   pros::Task driveTask (driveControl);
   //loop to control the drive train
-  while (true) {
-    while (mainController.getDigital(ControllerDigital::L1)) {
-      pros::Task::delay(500);
-      rev = true;
-      mainController.rumble(".");
-      while (mainController.getDigital(ControllerDigital::L1)) pros::Task::delay(10);
-    }
-    if (rev) reversed = !reversed;
-    rev = false;
-    pros::Task::delay(10);
-  }
+  while (true) pros::Task::delay(10);
 }
