@@ -1,7 +1,7 @@
 #include "main.h"
 //global variables
 extern Motor intake;
-extern Motor launcher;
+extern Motor puncher;
 extern ChassisControllerIntegrated chassis;
 Controller mainController (ControllerId::master);
 Controller auxController (ControllerId::partner);
@@ -21,13 +21,13 @@ void intakeControl (void * param) {
   }
 }
 
-void launcherControl (void * param) {
+void puncherControl (void * param) {
   while (true) {
-    if (mainController.getDigital(ControllerDigital::L2)) launcher.moveRelative(1800, 100);
+    if (mainController.getDigital(ControllerDigital::L2)) puncher.moveRelative(1800, 100);
     else if (mainController.getDigital(ControllerDigital::A) && intakeMutex.take(0)) {
       intakeMutex.take(500);
       intake.moveVoltage(-12000);
-      launcher.moveRelative(1800, 100);
+      puncher.moveRelative(1800, 100);
       pros::Task::delay(600);
       intakeMutex.give();
     }
@@ -44,7 +44,7 @@ void driveControl (void * param) {
 void opcontrol() {
   //tasks to control other functions
   pros::Task intakeTask (intakeControl);
-  pros::Task launcherTask (launcherControl);
+  pros::Task puncherTask (puncherControl);
   pros::Task driveTask (driveControl);
   //loop to control the drive train
   while (true) pros::Task::delay(10);
