@@ -1,7 +1,7 @@
 #include "main.h"
 //global variables
 extern Motor intake;
-extern Motor launcher;
+extern Motor puncher;
 extern ChassisControllerIntegrated chassis;
 
 void autonomous() {
@@ -9,7 +9,7 @@ void autonomous() {
   pros::Task::delay(5000);
 
   intake.moveVoltage(0);
-  launcher.moveRelative(1800, 100);
+  puncher.moveRelative(1800, 100);
   pros::Task::delay(1000);
 
   chassis.moveDistance(1500);
@@ -32,7 +32,7 @@ void autonomous() {
   intake.moveVoltage(-12000);
   pros::Task::delay(2000);
   intake.moveVoltage(0);
-  launcher.moveRelative(1800, 100);
+  puncher.moveRelative(1800, 100);
   pros::Task::delay(1000);
   chassis.moveDistance(1500);
 }
