@@ -5,7 +5,6 @@ extern Motor launcher;
 extern ChassisControllerIntegrated chassis;
 
 void autonomous() {
-  init();
   intake.moveVoltage(-12000);
   pros::Task::delay(5000);
 
