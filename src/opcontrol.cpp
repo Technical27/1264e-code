@@ -1,5 +1,4 @@
 #include "main.h"
-//global variables
 extern Motor intake;
 extern Motor puncher;
 extern ChassisControllerIntegrated chassis;
@@ -8,7 +7,6 @@ Controller auxController (ControllerId::partner);
 pros::Mutex intakeMutex;
 
 void intakeControl (void * param) {
-  //loop to control intake motor
   while (true) {
     if (intakeMutex.take(0)) {
       intakeMutex.take(100);
@@ -42,10 +40,8 @@ void driveControl (void * param) {
 }
 
 void opcontrol() {
-  //tasks to control other functions
   pros::Task intakeTask (intakeControl);
   pros::Task puncherTask (puncherControl);
   pros::Task driveTask (driveControl);
-  //loop to control the drive train
   while (true) pros::Task::delay(10);
 }

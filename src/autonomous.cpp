@@ -1,5 +1,4 @@
 #include "main.h"
-//global variables
 extern Motor intake;
 extern Motor puncher;
 extern ChassisControllerIntegrated chassis;
