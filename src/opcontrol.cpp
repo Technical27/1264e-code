@@ -1,5 +1,4 @@
-#include "main.h"
-extern ChassisControllerIntegrated chassis;
+#include "include.hpp"
 Controller mainController (ControllerId::master);
 
 void driveControl (void * param) {
