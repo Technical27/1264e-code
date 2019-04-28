@@ -1,7 +1,5 @@
 #include "include.hpp"
-MotorGroup leftSide ({Motor(2, false, AbstractMotor::gearset::green), Motor(3, false, AbstractMotor::gearset::green)});
-MotorGroup rightSide ({Motor(4, true, AbstractMotor::gearset::green), Motor(5, true, AbstractMotor::gearset::green)});
-ChassisControllerIntegrated chassis = ChassisControllerFactory::create(leftSide, rightSide, AbstractMotor::gearset::green);
+ChassisControllerIntegrated chassis = ChassisControllerFactory::create({2, 3}, {-4, -5}, AbstractMotor::gearset::green);
 
 void initialize () {}
 
