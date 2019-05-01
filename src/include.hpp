@@ -1,3 +1,6 @@
 #include "main.h"
 
-extern ChassisControllerIntegrated chassis;
+extern Motor frontLeft;
+extern Motor frontRight;
+extern Motor backLeft;
+extern Motor backRight;

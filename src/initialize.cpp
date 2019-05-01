@@ -1,7 +1,16 @@
 #include "include.hpp"
-ChassisControllerIntegrated chassis = ChassisControllerFactory::create({2, 3}, {-4, -5}, AbstractMotor::gearset::green);
+Motor frontLeft (11, false, AbstractMotor::gearset::green);
+Motor frontRight (1, true, AbstractMotor::gearset::green);
+Motor backLeft (16, false, AbstractMotor::gearset::green);
+Motor backRight (5, true, AbstractMotor::gearset::green);
 
-void initialize () {}
+void screenControl (void* param) {
+  while (true) pros::Task::delay(100);
+}
+
+void initialize () {
+  pros::Task screenTask (screenControl);
+}
 
 void disabled () {}
 
