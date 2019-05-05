@@ -1,5 +1,6 @@
 #include "main.h"
 
+// variable and function definitions
 extern Motor frontLeft;
 extern Motor frontRight;
 extern Motor backLeft;
