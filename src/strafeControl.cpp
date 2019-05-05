@@ -1,5 +1,6 @@
 #include "include.hpp"
 
+// Controls left and right movement by buttons, and also compensates for motor speed differences
 void strafeControl (void* param) {
   double FLError = 0, FRError = 0, BLError = 0, BRError = 0;
   double Kp = 2;
