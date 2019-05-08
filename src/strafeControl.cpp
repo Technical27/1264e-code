@@ -11,12 +11,12 @@ void strafeControl (void* param) {
 
   while (true) {
     pros::Task::delay(25);
-    controllerLeft = mainController.getDigital(ControllerDigital::left);
-    controllerRight = mainController.getDigital(ControllerDigital::right);
+    controllerLeft = mainController.getDigital(ControllerDigital::L2);
+    controllerRight = mainController.getDigital(ControllerDigital::R2);
     if (controllerLeft || controllerRight) {
       motorMutex.take(50);
       while (controllerLeft || controllerRight) {
-        reverse = controllerLeft ? -1 : 1;
+        reverse = controllerLeft ? 1 : -1;
         frontLeft.moveVoltage(-reverse * startVoltage + (FLError * Kp));
         frontRight.moveVoltage(reverse * startVoltage + (FRError * Kp));
         backLeft.moveVoltage(reverse * startVoltage + (BLError * Kp));
@@ -27,8 +27,8 @@ void strafeControl (void* param) {
         BLError = target - backLeft.getActualVelocity();
         BRError = target - backRight.getActualVelocity();
         
-        controllerLeft = mainController.getDigital(ControllerDigital::left);
-        controllerRight = mainController.getDigital(ControllerDigital::right);
+        controllerLeft = mainController.getDigital(ControllerDigital::L2);
+        controllerRight = mainController.getDigital(ControllerDigital::R2);
         pros::Task::delay(25);
       }
       motorMutex.give();
