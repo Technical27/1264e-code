@@ -11,14 +11,13 @@ MotorGroup right ({frontRight, backRight});
 
 Controller mainController (ControllerId::master);
 
+ADIButton menuLeft (2);
+ADIButton menuRight (3);
+
+ADIGyro mainGyro (4);
+
 pros::Mutex motorMutex;
 
-// In the future, this will control the screen
-void screenControl (void* param) {
-  while (true) pros::Task::delay(100);
-}
-
-// Currently only starts the useless screen task
 void initialize () {
   pros::Task screenTask (screenControl);
 }
