@@ -1,6 +1,5 @@
 #include "include.hpp"
 
-
 // Function to draw a rectangle
 lv_obj_t* drawRect(int x, int y, int w, int h, lv_color_t color, lv_obj_t* parent) {
   lv_obj_t* obj1 = lv_obj_create(parent, NULL);
@@ -20,7 +19,6 @@ lv_obj_t* drawRect(int x, int y, int w, int h, lv_color_t color, lv_obj_t* paren
 
   return obj1;
 }
-
 
 // Function to control the display
 void screenControl (void* param) {
