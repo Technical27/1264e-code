@@ -1,7 +1,7 @@
 #include "include.hpp"
 
 // Controls motors by joysticks
-void driveControl (void* param) {
+void driveControl (void*) {
   while (true) {
     pros::Task::delay(25);
     if (!motorMutex.take(0)) continue;

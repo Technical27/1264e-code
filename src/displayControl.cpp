@@ -21,7 +21,7 @@ lv_obj_t* drawRect(int x, int y, int w, int h, lv_color_t color, lv_obj_t* paren
 }
 
 // Function to control the display
-void screenControl (void* param) {
+void screenControl (void*) {
   int selectedAuton = 1;
   bool auton = false;
 

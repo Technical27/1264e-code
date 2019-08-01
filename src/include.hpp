@@ -21,6 +21,6 @@ extern Controller mainController;
 extern pros::Mutex motorMutex;
 
 // Task functions
-void driveControl (void* param);
-void strafeControl (void* param);
-void screenControl (void* param);
+void driveControl (void*);
+void strafeControl (void*);
+void screenControl (void*);
