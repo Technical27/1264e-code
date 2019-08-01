@@ -25,7 +25,7 @@ void screenControl (void*) {
   int selectedAuton = 1;
   bool auton = false;
 
-  lv_obj_t* autonSection = drawRect(0, 0, 100 , 100, LV_COLOR_RED, lv_scr_act());
+  lv_obj_t* autonSection = drawRect(0, 0, 100, 100, LV_COLOR_RED, lv_scr_act());
   lv_obj_t* currentAuton = lv_label_create(autonSection, NULL);
 
   // Declared to -1 to force a screen update to initially draw the text
