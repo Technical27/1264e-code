@@ -18,6 +18,8 @@ ADIGyro mainGyro (4);
 
 pros::Mutex motorMutex;
 
+std::vector<std::unique_ptr<double[]>> loadedAuton;
+
 void initialize () {
   pros::Task screenTask (screenControl);
 }
