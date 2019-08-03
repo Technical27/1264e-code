@@ -9,4 +9,5 @@ void loadAuton (const char* filename) {
     fread(doubles.get(), sizeof(double), 4, file);
     loadedAuton.push_back(std::move(doubles));
   }
+  fclose(file);
 }
