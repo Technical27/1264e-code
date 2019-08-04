@@ -20,15 +20,10 @@ extern ADIButton menuRight;
 // The main controller
 extern Controller mainController;
 
-// Mutex for motor access
-extern pros::Mutex motorMutex;
-
 // Currently loaded auton
 extern std::vector<std::unique_ptr<double[]>> loadedAuton;
 
 // Task functions
-void driveControl (void*);
-void strafeControl (void*);
 void screenControl (void*);
 
 void loadAuton (const char* filename);

@@ -16,8 +16,6 @@ ADIButton menuRight (3);
 
 ADIGyro mainGyro (4);
 
-pros::Mutex motorMutex;
-
 std::vector<std::unique_ptr<double[]>> loadedAuton;
 
 void initialize () {
