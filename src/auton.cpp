@@ -1,7 +1,6 @@
 #include "include.hpp"
 
 void autonomous () {
-  loadAuton("/usd/auton");
   for (int i = 0; i < loadedAuton.size(); i++) {
     frontRight.moveVelocity(loadedAuton[i][1]);
     frontLeft.moveVelocity(loadedAuton[i][2]);
