@@ -20,7 +20,7 @@ std::vector<std::unique_ptr<double[]>> loadedAuton;
 
 void initialize () {
   loadAuton("/usd/auton");
-  pros::Task screenTask (screenControl);
+  //pros::Task screenTask (screenControl);
 }
 
 // Unused functions
