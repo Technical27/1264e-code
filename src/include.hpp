@@ -8,6 +8,7 @@ extern Motor frontLeft;
 extern Motor frontRight;
 extern Motor backLeft;
 extern Motor backRight;
+extern Motor claw;
 
 // Left and right motor groups
 extern MotorGroup left;

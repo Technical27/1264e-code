@@ -6,6 +6,8 @@ Motor frontRight (20, true, AbstractMotor::gearset::green);
 Motor backLeft (1, false, AbstractMotor::gearset::green);
 Motor backRight (11, true, AbstractMotor::gearset::green);
 
+Motor claw (21);
+
 MotorGroup left ({frontLeft, backLeft});
 MotorGroup right ({frontRight, backRight});
 
@@ -19,6 +21,7 @@ ADIGyro mainGyro (4);
 std::vector<std::unique_ptr<double[]>> loadedAuton;
 
 void initialize () {
+  claw.setBrakeMode(AbstractMotor::brakeMode::hold);
   loadAuton("/usd/auton");
 }
 
