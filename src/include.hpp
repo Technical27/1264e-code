@@ -27,4 +27,6 @@ extern std::vector<std::unique_ptr<double[]>> loadedAuton;
 // Task functions
 void screenControl (void*);
 
-void loadAuton (const char* filename);
+bool autonLoaded;
+
+bool loadAuton (const char* filename);

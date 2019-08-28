@@ -20,6 +20,8 @@ ADIGyro mainGyro (4);
 
 std::vector<std::unique_ptr<double[]>> loadedAuton;
 
+bool autonLoaded = false;
+
 void initialize () {
   claw.setBrakeMode(AbstractMotor::brakeMode::hold);
   loadAuton("/usd/auton");
