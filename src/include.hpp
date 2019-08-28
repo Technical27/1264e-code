@@ -1,7 +1,7 @@
 #include "main.h"
 #include <memory>
 #include <vector>
-#include <stdio.h>
+#include <cstdio>
 
 // Individual motors
 extern Motor frontLeft;
