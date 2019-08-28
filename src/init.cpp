@@ -24,7 +24,7 @@ bool autonLoaded = false;
 
 void initialize () {
   claw.setBrakeMode(AbstractMotor::brakeMode::hold);
-  loadAuton("/usd/auton");
+  autonLoaded = loadAuton("/usd/auton");
 }
 
 // Unused functions
