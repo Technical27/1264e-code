@@ -17,10 +17,9 @@ void clawControl (void*) {
 
 // Controls motors by joysticks
 void opcontrol () {
-  pros::Task buttons (clawControl);
+  pros::Task clawTask (clawControl);
   while (true) {
-    left.moveVoltage(mainController.getAnalog(ControllerAnalog::leftY) * 12000);
-    right.moveVoltage(mainController.getAnalog(ControllerAnalog::rightY) * 12000);
+    chassis.tank(mainController.getAnalog(ControllerAnalog::leftY), mainController.getAnalog(ControllerAnalog::rightY));
     pros::Task::delay(10);
   }
 }

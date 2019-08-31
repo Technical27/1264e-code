@@ -14,6 +14,9 @@ extern Motor claw;
 extern MotorGroup left;
 extern MotorGroup right;
 
+// Chassis
+extern ChassisControllerIntegrated chassis;
+
 // menu buttons
 extern ADIButton menuLeft;
 extern ADIButton menuRight;

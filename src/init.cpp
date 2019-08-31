@@ -11,6 +11,8 @@ Motor claw (21);
 MotorGroup left ({frontLeft, backLeft});
 MotorGroup right ({frontRight, backRight});
 
+ChassisControllerIntegrated chassis = ChassisControllerFactory::create(left, right, AbstractMotor::gearset::green);
+
 Controller mainController (ControllerId::master);
 
 ADIButton menuLeft (2);
