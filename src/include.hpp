@@ -17,19 +17,15 @@ extern MotorGroup right;
 // Chassis
 extern ChassisControllerIntegrated chassis;
 
-// menu buttons
-extern ADIButton menuLeft;
-extern ADIButton menuRight;
-
 // The main controller
 extern Controller mainController;
 
 // Currently loaded auton
 extern std::vector<std::unique_ptr<double[]>> loadedAuton;
 
+extern bool autonLoaded;
+
 // Task functions
 void screenControl (void*);
-
-extern bool autonLoaded;
 
 bool loadAuton (const char* filename);

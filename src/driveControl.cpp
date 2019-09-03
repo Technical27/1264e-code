@@ -1,16 +1,25 @@
 #include "include.hpp"
 
 void clawControl (void*) {
-  bool on = false;
-  int time = pros::millis();
-  int ptime = pros::millis();
+  bool rOn = false;
+  bool eOn = false;
+  int rtime = pros::millis();
+  int rptime = pros::millis();
+  int etime = pros::millis();
+  int eptime = pros::millis();
   while (true) {
-    if (mainController.getDigital(ControllerDigital::A) && time - ptime > 500) {
-      ptime = pros::millis();
-      on = !on;
-      on ? claw.moveRelative(150, 3000) : claw.moveRelative(-150, 3000);
+    if (mainController.getDigital(ControllerDigital::A) && rtime - rptime > 500) {
+      rptime = pros::millis();
+      rOn = !rOn;
+      if (rOn) claw.moveRelative(500, 3000);
     }
-    time = pros::millis();
+    else if (mainController.getDigital(ControllerDigital::B) && etime - eptime > 500) {
+      eptime = pros::millis();
+      eOn = !eOn;
+      if (eOn) claw.moveRelative(500, 3000);
+    }
+    etime = pros::millis();
+    rtime = pros::millis();
     pros::Task::delay(10);
   }
 }
