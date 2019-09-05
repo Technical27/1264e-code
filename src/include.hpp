@@ -28,4 +28,9 @@ extern bool autonLoaded;
 // Task functions
 void screenControl (void*);
 
+// Error output
+extern lv_obj_t* errorArea;
+
+void debugLog(const char* text);
+
 bool loadAuton (const char* filename);
