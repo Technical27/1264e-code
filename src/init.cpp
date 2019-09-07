@@ -25,7 +25,7 @@ std::vector<std::unique_ptr<double[]>> loadedAuton;
 bool autonLoaded = false;
 
 void initialize () {
-  pros::Task screenTask (screenControl, nullptr, "screen");
+  pros::Task screenTask (screenControl);
   autonLoaded = loadAuton("/usd/auton");
   claw.setBrakeMode(AbstractMotor::brakeMode::hold);
 }
