@@ -32,7 +32,7 @@ void clawControl (void*) {
 
 // Controls motors by joysticks
 void opcontrol () {
-  pros::Task clawTask (clawControl);
+  pros::Task clawTask (clawControl, nullptr, "claw");
   while (true) {
     chassis.tank(mainController.getAnalog(ControllerAnalog::leftY), mainController.getAnalog(ControllerAnalog::rightY));
     pros::Task::delay(10);
