@@ -18,4 +18,5 @@ void screenControl (void*) {
   errorArea = lv_ta_create(lv_scr_act(), nullptr);
   lv_obj_set_size(errorArea, 300, 100);
   lv_obj_align(errorArea, nullptr, LV_ALIGN_IN_TOP_LEFT, 0, 0);
+  lv_ta_set_text(errorArea, "");
 }
