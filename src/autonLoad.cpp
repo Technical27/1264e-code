@@ -16,10 +16,21 @@ bool loadAuton (const char* filename) {
     debugLog(strerror(errno));
     return false;
   }
+  int size = 750;
+  loadedAuton = new double*[size];
+  int i = 0;
   while (!feof(file)) {
-    std::unique_ptr<double[]> doubles (new double[4]);
-    fread(doubles.get(), sizeof(double), 4, file);
-    loadedAuton.push_back(std::move(doubles));
+    double *doubles = new double[4];
+    fread(doubles, sizeof(double), 4, file);
+    loadedAuton[i++] = doubles;
+    if (i >= size) {
+      int nsize = size + 100;
+      double **tmp = new double*[nsize];
+      std::memcpy(loadedAuton, tmp, sizeof(size));
+      size = nsize;
+      delete[] loadedAuton;
+      loadedAuton = tmp;
+    }
   }
   fclose(file);
   return true;

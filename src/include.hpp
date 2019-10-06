@@ -10,6 +10,7 @@
 #include <memory>
 #include <vector>
 #include <cstdio>
+#include <cstring>
 
 // Individual motors
 extern Motor frontLeft;
@@ -29,7 +30,7 @@ extern ChassisControllerIntegrated chassis;
 extern Controller mainController;
 
 // Currently loaded auton
-extern std::vector<std::unique_ptr<double[]>> loadedAuton;
+extern double **loadedAuton;
 
 extern bool autonLoaded;
 
