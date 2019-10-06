@@ -16,7 +16,8 @@ void debugLog (const char* text) {
 
 void screenControl (void*) {
   errorArea = lv_ta_create(lv_scr_act(), nullptr);
-  lv_obj_set_size(errorArea, 300, 100);
+  lv_obj_set_size(errorArea, LV_HOR_RES, LV_VER_RES);
   lv_obj_align(errorArea, nullptr, LV_ALIGN_IN_TOP_LEFT, 0, 0);
   lv_ta_set_text(errorArea, "");
+  lv_ta_set_cursor_type(errorArea, LV_CURSOR_NONE);
 }
