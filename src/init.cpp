@@ -28,8 +28,8 @@ ADIButton menuRight (3);
 
 ADIGyro mainGyro (4);
 
-std::vector<std::unique_ptr<double[]>> loadedAuton;
-
+double** loadedAuton;
+int size = 0;
 bool autonLoaded = false;
 
 void initialize () {

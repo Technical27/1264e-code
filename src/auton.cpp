@@ -9,8 +9,8 @@
 #include "include.hpp"
 
 void autonomous () {
-  if (autonLoaded) {
-    for (int i = 0; i < loadedAuton.size(); i++) {
+  if (autonLoaded && size != 0) {
+    for (int i = 0; i < size; i++) {
       frontRight.moveVelocity(loadedAuton[i][0]);
       frontLeft.moveVelocity(loadedAuton[i][1]);
       backRight.moveVelocity(loadedAuton[i][2]);

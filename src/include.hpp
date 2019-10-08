@@ -31,7 +31,7 @@ extern Controller mainController;
 
 // Currently loaded auton
 extern double **loadedAuton;
-
+extern int size;
 extern bool autonLoaded;
 
 // Task functions
