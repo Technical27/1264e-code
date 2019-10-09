@@ -12,6 +12,7 @@
   lv_obj_t* name = lv_btn_create(par, cpy); \
   lv_obj_t* name##Label = lv_label_create(name, nullptr); \
   lv_label_set_text(name##Label, label); \
+  lv_obj_align(name##Label, name, LV_ALIGN_CENTER, 0, 0); \
   lv_obj_set_signal_func(name, name##Handle);
 
 #define CreateBtnHandle(name, scr) \
