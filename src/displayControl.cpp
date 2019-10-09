@@ -8,16 +8,59 @@
 */
 #include "include.hpp"
 
+#define CreateBtn(name, par, cpy, label) \
+  lv_obj_t* name = lv_btn_create(par, cpy); \
+  lv_obj_t* name##Label = lv_label_create(name, nullptr); \
+  lv_label_set_text(name##Label, label); \
+  lv_obj_set_signal_func(name, name##Handle);
+
+#define CreateBtnHandle(name, scr) \
+  lv_res_t name##Handle (lv_obj_t*, lv_signal_t e, void*) { \
+    if(e == LV_SIGNAL_PRESSING) lv_scr_load(scr); \
+    return LV_RES_OK; \
+  }
+
+#define CreateScr(scr) scr = lv_obj_create(nullptr, nullptr);
+
 lv_obj_t* errorArea;
+lv_obj_t* scr;
+lv_obj_t* dbg;
+lv_obj_t* auton;
+
+CreateBtnHandle(dbgToMain, scr)
+CreateBtnHandle(mainToDbg, dbg)
+
+CreateBtnHandle(mainToAuton, auton)
+CreateBtnHandle(autonToMain, scr)
 
 void debugLog (const char* text) {
   lv_ta_add_text(errorArea, text);
 }
 
 void screenControl (void*) {
-  errorArea = lv_ta_create(lv_scr_act(), nullptr);
+  CreateScr(scr)
+  CreateScr(dbg)
+  CreateScr(auton)
+
+  lv_scr_load(scr);
+
+  CreateBtn(mainToDbg, scr, nullptr, "Debug")
+  lv_obj_set_size(mainToDbg, LV_VER_RES/2, LV_HOR_RES/2);
+  lv_obj_align(mainToDbg, nullptr, LV_ALIGN_IN_TOP_LEFT, 0, 0);
+
+  CreateBtn(dbgToMain, dbg, nullptr, "Back to Main")
+  lv_obj_set_size(dbgToMain, LV_HOR_RES/4, LV_VER_RES/8);
+  lv_obj_align(dbgToMain, nullptr, LV_ALIGN_IN_TOP_LEFT, 0, 0);
+
+  CreateBtn(mainToAuton, scr, mainToDbg, "Auton")
+  lv_obj_align(mainToAuton, nullptr, LV_ALIGN_IN_TOP_RIGHT, 0, 0);
+
+  CreateBtn(autonToMain, auton, dbgToMain, "Back to Main")
+
+  errorArea = lv_ta_create(dbg, nullptr);
+ 
   lv_obj_set_size(errorArea, LV_HOR_RES, LV_VER_RES);
-  lv_obj_align(errorArea, nullptr, LV_ALIGN_IN_TOP_LEFT, 0, 0);
+  lv_obj_align(errorArea, nullptr, LV_ALIGN_IN_TOP_LEFT, 0, LV_VER_RES/8);
   lv_ta_set_text(errorArea, "");
   lv_ta_set_cursor_type(errorArea, LV_CURSOR_NONE);
 }
