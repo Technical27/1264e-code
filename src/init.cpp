@@ -34,6 +34,8 @@ void initialize () {
 }
 
 // Unused functions
-void disabled () {}
+void disabled () {
+  if (errorArea != nullptr) debugLog("Robot Disabled");
+}
 
 void competition_initialize () {}

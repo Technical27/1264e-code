@@ -11,10 +11,10 @@
 void autonomous () {
   // Skills
   if (currentAuton == 3) {
-  
+    debugLog("Starting skills auton");
   }
   // Blue and red autons
   else if (currentAuton != 0) {
-  
+    debugLog("Starting Normal auton");
   }
 }
