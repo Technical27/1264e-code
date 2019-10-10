@@ -47,15 +47,15 @@ CreateBtnHandle(mainToDbg, dbg)
 CreateBtnHandle(mainToAuton, auton)
 CreateBtnHandle(autonToMain, scr)
 
-int currentAuton = 0;
-const char* autonModes[] = {"Blue", "Red", "Skills"};
+int currentAuton = 1;
+const char* autonModes[] = {"Off", "Blue", "Red", "Skills"};
 
 int currentSide = 0;
 const char* autonSides[] = {"Left", "Right"};
 
 lv_res_t autonModeHandle (lv_obj_t*, lv_signal_t e, void*) {
   if (e == LV_SIGNAL_PRESSING) {
-    if (++currentAuton > 2) currentAuton = 0;
+    if (++currentAuton > 3) currentAuton = 0;
     lv_label_set_text(autonModeLabel, autonModes[currentAuton]);
   }
   return LV_RES_OK;
