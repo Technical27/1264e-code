@@ -28,13 +28,8 @@ ADIButton menuRight (3);
 
 ADIGyro mainGyro (4);
 
-double** loadedAuton;
-int size = 0;
-bool autonLoaded = false;
-
 void initialize () {
   pros::Task screenTask (screenControl, nullptr, "screen");
-  autonLoaded = loadAuton("/usd/auton");
   claw.setBrakeMode(AbstractMotor::brakeMode::hold);
 }
 

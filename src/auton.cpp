@@ -9,13 +9,12 @@
 #include "include.hpp"
 
 void autonomous () {
-  if (autonLoaded && size != 0) {
-    for (int i = 0; i < size; i++) {
-      frontRight.moveVelocity(loadedAuton[i][0]);
-      frontLeft.moveVelocity(loadedAuton[i][1]);
-      backRight.moveVelocity(loadedAuton[i][2]);
-      backLeft.moveVelocity(loadedAuton[i][3]);
-      pros::Task::delay(20);
-    }
+  // Skills
+  if (currentAuton == 3) {
+  
+  }
+  // Blue and red autons
+  else if (currentAuton != 0) {
+  
   }
 }

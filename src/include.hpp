@@ -29,11 +29,6 @@ extern ChassisControllerIntegrated chassis;
 // The main controller
 extern Controller mainController;
 
-// Currently loaded auton
-extern double **loadedAuton;
-extern int size;
-extern bool autonLoaded;
-
 // Current selected auton
 extern int currentAuton;
 extern int currentSide;
@@ -45,5 +40,3 @@ void screenControl (void*);
 extern lv_obj_t* errorArea;
 
 void debugLog(const char* text);
-
-bool loadAuton (const char* filename);
