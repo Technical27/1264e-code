@@ -34,6 +34,10 @@ extern double **loadedAuton;
 extern int size;
 extern bool autonLoaded;
 
+// Current selected auton
+extern int currentAuton;
+extern int currentSide;
+
 // Task functions
 void screenControl (void*);
 
