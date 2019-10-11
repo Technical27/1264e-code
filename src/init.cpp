@@ -23,11 +23,6 @@ ChassisControllerIntegrated chassis = ChassisControllerFactory::create(left, rig
 
 Controller mainController (ControllerId::master);
 
-ADIButton menuLeft (2);
-ADIButton menuRight (3);
-
-ADIGyro mainGyro (4);
-
 void initialize () {
   pros::Task screenTask (screenControl, nullptr, "screen");
   claw.setBrakeMode(AbstractMotor::brakeMode::hold);
