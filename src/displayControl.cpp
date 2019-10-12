@@ -81,7 +81,7 @@ void screenControl (void*) {
   lv_scr_load(scr);
 
   CreateBtn(mainToDbg, scr, nullptr, "Debug")
-  lv_obj_set_size(mainToDbg, LV_VER_RES/2, LV_HOR_RES/2);
+  lv_obj_set_size(mainToDbg, LV_HOR_RES/2, LV_VER_RES/2);
   lv_obj_align(mainToDbg, nullptr, LV_ALIGN_IN_TOP_LEFT, 0, 0);
 
   CreateBtn(dbgToMain, dbg, nullptr, "Back to Main")
@@ -94,7 +94,7 @@ void screenControl (void*) {
   CreateBtn(autonToMain, auton, dbgToMain, "Back to Main")
 
   CreateBtn(autonMode, auton, nullptr, "Blue")
-  lv_obj_set_size(mainToDbg, LV_VER_RES/2, LV_HOR_RES/2);
+  lv_obj_set_size(mainToDbg, LV_HOR_RES/2, LV_VER_RES/2);
   lv_obj_align(autonMode, nullptr, LV_ALIGN_IN_TOP_RIGHT, 0, LV_VER_RES/8);
   autonModeHandle(nullptr, LV_SIGNAL_PRESS_LOST, autonModeLabel);
 
