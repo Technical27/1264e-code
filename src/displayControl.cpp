@@ -108,5 +108,5 @@ void screenControl (void*) {
   lv_obj_align(errorArea, nullptr, LV_ALIGN_IN_TOP_LEFT, 0, LV_VER_RES/8);
   lv_ta_set_text(errorArea, "");
   lv_ta_set_cursor_type(errorArea, LV_CURSOR_NONE);
-  debugLog("Finished Initalizing Display");
+  debugLog("Finished Initalizing Display\n");
 }

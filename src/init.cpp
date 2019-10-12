@@ -28,9 +28,8 @@ void initialize () {
   claw.setBrakeMode(AbstractMotor::brakeMode::hold);
 }
 
-// Unused functions
 void disabled () {
-  if (errorArea != nullptr) debugLog("Robot Disabled");
+  if (errorArea != nullptr) debugLog("Robot Disabled\n");
 }
 
 void competition_initialize () {}
