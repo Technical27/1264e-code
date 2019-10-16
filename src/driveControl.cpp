@@ -18,12 +18,12 @@ void clawControl (void*) {
     if (mainController.getDigital(ControllerDigital::A) && cooldownPassed && !on) {
       ptime = pros::millis();
       on = true;
-      claw.moveRelative(1550, 600);
+      claw.moveRelative(1300, 600);
     }
     else if (mainController.getDigital(ControllerDigital::B) && cooldownPassed && on) {
       ptime = pros::millis();
       on = false;
-      claw.moveRelative(-1550, 600);
+      claw.moveRelative(-1300, 600);
     }
     time = pros::millis();
     pros::Task::delay(10);
