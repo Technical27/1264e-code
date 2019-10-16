@@ -9,12 +9,12 @@
 #include "include.hpp"
 
 // Variable definitions
-Motor frontLeft (10, false, AbstractMotor::gearset::green);
-Motor frontRight (20, true, AbstractMotor::gearset::green);
-Motor backLeft (1, false, AbstractMotor::gearset::green);
-Motor backRight (11, true, AbstractMotor::gearset::green);
+Motor frontLeft (10, true, AbstractMotor::gearset::green);
+Motor frontRight (20, false, AbstractMotor::gearset::green);
+Motor backLeft (1, true, AbstractMotor::gearset::green);
+Motor backRight (11, false, AbstractMotor::gearset::green);
 
-Motor claw (21);
+Motor claw (21, true, AbstractMotor::gearset::green);
 
 MotorGroup left ({frontLeft, backLeft});
 MotorGroup right ({frontRight, backRight});
