@@ -20,11 +20,12 @@ int lastScrChange = pros::millis();
   lv_label_set_text(name##Label, label); \
   lv_obj_set_size(name, w, h); \
   lv_obj_align(name##Label, name, LV_ALIGN_CENTER, 0, 0); \
+  lv_obj_set_style(name, &mainStyle); \
   lv_obj_set_signal_func(name, name##Handle); 
 
 #define CreateBtnHandle(name, scr) \
   lv_res_t name##Handle (lv_obj_t*, lv_signal_t e, void*) { \
-    if(e == LV_SIGNAL_LONG_PRESS) { \
+    if(e == LV_SIGNAL_PRESSED && lastScrChange + 100 < pros::millis()) { \
       lv_scr_load(scr); \
       lastScrChange = pros::millis(); \
     } \
@@ -35,33 +36,63 @@ int lastScrChange = pros::millis();
   scr = lv_obj_create(nullptr, nullptr); \
   lv_obj_set_style(scr, &mainStyle);
 
+#define CreateAutonScrHandle(name) \
+  lv_res_t name##Handle (lv_obj_t*, lv_signal_t e, void*) { \
+    if (e == LV_SIGNAL_PRESSED && lastScrChange + 100 < pros::millis()) { \
+      lv_scr_load(name##Scr); \
+      lastScrChange = pros::millis(); \
+    } \
+    return LV_RES_OK; \
+  }
+
+#define CreateAutonBackToMain(name, par) \
+  name = lv_btn_create(par, nullptr); \
+  name##Label = lv_label_create(name, nullptr); \
+  lv_label_set_text(name##Label, "Back to main"); \
+  lv_obj_set_size(name, LV_HOR_RES/2, LV_VER_RES/2); \
+  lv_obj_align(name##Label, name, LV_ALIGN_CENTER, 0, 0); \
+  lv_obj_align(name, nullptr, LV_ALIGN_IN_BOTTOM_RIGHT, 0, 0); \
+  lv_obj_set_style(name, &mainStyle); \
+  lv_obj_set_signal_func(name, name##Handle); 
+
 lv_style_t mainStyle;
 
 LV_IMG_DECLARE(obama)
-lv_obj_t* obamaImg;
 
 std::string buf;
 
 lv_obj_t* errorArea;
 lv_obj_t* scr;
 lv_obj_t* dbg;
-lv_obj_t* auton;
+
 lv_obj_t* obamaScr;
+lv_obj_t* autonRedScr;
+lv_obj_t* autonBlueScr;
+lv_obj_t* autonSkillsScr;
 
 DefineBtn(dbgToMain)
 DefineBtn(mainToDbg)
 
-DefineBtn(mainToAuton)
-DefineBtn(autonToMain)
+DefineBtn(autonRed)
+DefineBtn(autonBlue)
+DefineBtn(autonSkills)
 
-DefineBtn(autonMode)
-DefineBtn(autonSide)
+DefineBtn(autonRedBack)
+DefineBtn(autonBlueBack)
+DefineBtn(autonSkillsBack)
 
 CreateBtnHandle(dbgToMain, scr)
 CreateBtnHandle(mainToDbg, dbg)
 
-CreateBtnHandle(mainToAuton, auton)
-CreateBtnHandle(autonToMain, scr)
+CreateBtnHandle(obamaToMain, scr)
+
+CreateAutonScrHandle(autonRed)
+CreateAutonScrHandle(autonBlue)
+CreateAutonScrHandle(autonSkills)
+
+CreateBtnHandle(autonBlueBack, scr)
+CreateBtnHandle(autonRedBack, scr)
+CreateBtnHandle(autonSkillsBack, scr)
 
 int currentAuton = 1;
 const char* autonModes[] = {"Off", "Blue", "Red", "Skills"};
@@ -80,23 +111,7 @@ void initStyle () {
   mainStyle.body.main_color = LV_COLOR_BLACK;
   mainStyle.body.grad_color = mainStyle.body.main_color;
 
-  mainStyle.text.color = LV_COLOR_BLACK;
-}
-
-lv_res_t autonModeHandle (lv_obj_t*, lv_signal_t e, void*) {
-  if (e == LV_SIGNAL_PRESSED && lastScrChange + 100 < pros::millis()) {
-    if (++currentAuton > 3) currentAuton = 0;
-    lv_label_set_text(autonModeLabel, autonModes[currentAuton]);
-  }
-  return LV_RES_OK;
-}
-
-lv_res_t autonSideHandle (lv_obj_t*, lv_signal_t e, void*) {
-  if (e == LV_SIGNAL_PRESSED && lastScrChange + 100 < pros::millis()) {
-    if (++currentSide > 1) currentSide = 0;
-    lv_label_set_text(autonSideLabel, autonSides[currentSide]);
-  }
-  return LV_RES_OK;
+  mainStyle.text.color = LV_COLOR_WHITE;
 }
 
 void debugLog (const char* text) {
@@ -116,42 +131,52 @@ void screenControl (void*) {
   initStyle();
   CreateScr(scr)
   CreateScr(dbg)
-  CreateScr(auton)
   CreateScr(obamaScr)
+
+  CreateScr(autonBlueScr)
+  CreateScr(autonRedScr)
+  CreateScr(autonSkillsScr)
 
   lv_scr_load(scr);
 
-  CreateBtn(mainToDbg, scr, nullptr, "Debug", LV_HOR_RES/2, LV_VER_RES/2)
-  lv_obj_align(mainToDbg, nullptr, LV_ALIGN_IN_TOP_LEFT, 0, 0);
+  CreateBtn(mainToDbg, scr, nullptr, "Experimental", LV_HOR_RES/2, LV_VER_RES/2)
+  lv_obj_align(mainToDbg, nullptr, LV_ALIGN_IN_BOTTOM_RIGHT, 0, 0);
 
-  CreateBtn(dbgToMain, dbg, nullptr, "Back to Main", LV_HOR_RES/4, LV_VER_RES/8)
+  CreateBtn(dbgToMain, dbg, nullptr, "Back to Main", LV_HOR_RES/4, LV_VER_RES/4)
   lv_obj_align(dbgToMain, nullptr, LV_ALIGN_IN_TOP_LEFT, 0, 0);
 
-  CreateBtn(mainToAuton, scr, mainToDbg, "Auton", LV_HOR_RES/2, LV_VER_RES/2);
-  lv_obj_align(mainToAuton, nullptr, LV_ALIGN_IN_TOP_RIGHT, 0, 0);
+  CreateBtn(autonRed, scr, nullptr, "Red", LV_HOR_RES/2, LV_VER_RES/2)
+  lv_obj_align(autonRed, nullptr, LV_ALIGN_IN_TOP_LEFT, 0, 0);
 
-  CreateBtn(autonToMain, auton, dbgToMain, "Back to Main", LV_HOR_RES/4, LV_VER_RES/8);
+  CreateBtn(autonBlue, scr, nullptr, "Blue", LV_HOR_RES/2, LV_VER_RES/2)
+  lv_obj_align(autonBlue, nullptr, LV_ALIGN_IN_TOP_RIGHT, 0, 0);
 
-  CreateBtn(autonMode, auton, nullptr, "Blue", LV_HOR_RES/2, LV_VER_RES/2)
-  lv_obj_align(autonMode, nullptr, LV_ALIGN_IN_TOP_RIGHT, 0, LV_VER_RES/8);
-  autonModeHandle(nullptr, LV_SIGNAL_PRESS_LOST, autonModeLabel);
+  CreateBtn(autonSkills, scr, nullptr, "Skills", LV_HOR_RES/2, LV_VER_RES/2)
+  lv_obj_align(autonSkills, nullptr, LV_ALIGN_IN_BOTTOM_LEFT, 0, 0);
 
-  CreateBtn(autonSide, auton, autonMode, "Left", LV_HOR_RES/2, LV_VER_RES/2);
-  lv_obj_align(autonSide, nullptr, LV_ALIGN_IN_TOP_LEFT, 0, LV_VER_RES/8);
-  autonModeHandle(nullptr, LV_SIGNAL_PRESS_LOST, autonSideLabel);
+  CreateAutonBackToMain(autonRedBack, autonRedScr);
+  CreateAutonBackToMain(autonBlueBack, autonBlueScr);
+  CreateAutonBackToMain(autonSkillsBack, autonSkillsScr);
 
   errorArea = lv_ta_create(dbg, nullptr);
  
   lv_obj_set_size(errorArea, LV_HOR_RES, LV_VER_RES);
-  lv_obj_align(errorArea, nullptr, LV_ALIGN_IN_TOP_LEFT, 0, LV_VER_RES/8);
+  lv_obj_align(errorArea, nullptr, LV_ALIGN_IN_TOP_LEFT, 0, LV_VER_RES/4);
   lv_ta_set_text(errorArea, "");
   lv_ta_set_cursor_type(errorArea, LV_CURSOR_NONE);
 
   debugLog(buf.c_str());
   debugLog("Finished Initalizing Display\n");
 
-  lv_obj_t* obamaImg = lv_img_create(obamaScr, nullptr);
-  lv_img_set_src(obamaImg, &obama);
-  lv_obj_align(obamaImg, nullptr, LV_ALIGN_CENTER, 0, 0);
+  lv_obj_t* obamaImg1 = lv_imgbtn_create(obamaScr, nullptr);
+  lv_imgbtn_set_src(obamaImg1, LV_BTN_STATE_REL, &obama);
+  lv_obj_align(obamaImg1, nullptr, LV_ALIGN_IN_TOP_LEFT, 0, 0);
+  lv_obj_set_signal_func(obamaImg1, obamaToMainHandle);
+
+  lv_obj_t* obamaImg2 = lv_imgbtn_create(obamaScr, nullptr);
+  lv_imgbtn_set_src(obamaImg2, LV_BTN_STATE_REL, &obama);
+  lv_obj_align(obamaImg2, nullptr, LV_ALIGN_IN_TOP_RIGHT, 0, 0);
+  lv_obj_set_signal_func(obamaImg2, obamaToMainHandle);
+
   if (mode != 0) lv_scr_load(obamaScr);
 }
