@@ -33,10 +33,14 @@ extern Controller mainController;
 extern int currentAuton;
 extern int currentSide;
 
+// Current mode
+extern int mode;
+
 // Task functions
 void screenControl (void*);
 
 // Error output
-extern lv_obj_t* errorArea;
+void debugLog (const char* text);
 
-void debugLog(const char* text);
+// Obama image
+void loadObama ();

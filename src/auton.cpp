@@ -9,6 +9,8 @@
 #include "include.hpp"
 
 void autonomous () {
+  mode = 1;
+  loadObama();
   // Skills
   if (currentAuton == 3) {
     debugLog("Starting skills auton\n");

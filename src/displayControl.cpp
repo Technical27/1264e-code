@@ -34,12 +34,14 @@ int lastScrChange = pros::millis();
 #define CreateScr(scr) scr = lv_obj_create(nullptr, nullptr);
 
 LV_IMG_DECLARE(obama)
+lv_obj_t* obamaImg;
+
+std::string buf;
 
 lv_obj_t* errorArea;
 lv_obj_t* scr;
 lv_obj_t* dbg;
 lv_obj_t* auton;
-lv_obj_t* obamaScr;
 
 DefineBtn(dbgToMain)
 DefineBtn(mainToDbg)
@@ -80,6 +82,11 @@ lv_res_t autonSideHandle (lv_obj_t*, lv_signal_t e, void*) {
 
 void debugLog (const char* text) {
   if (errorArea != nullptr) lv_ta_add_text(errorArea, text);
+  else buf += text;
+}
+
+void loadObama () {
+  if (obamaScr != nullptr) lv_scr_load(obamaScr);
 }
 
 void screenControl (void*) {
@@ -115,10 +122,12 @@ void screenControl (void*) {
   lv_obj_align(errorArea, nullptr, LV_ALIGN_IN_TOP_LEFT, 0, LV_VER_RES/8);
   lv_ta_set_text(errorArea, "");
   lv_ta_set_cursor_type(errorArea, LV_CURSOR_NONE);
+
+  debugLog(buf);
   debugLog("Finished Initalizing Display\n");
 
   lv_obj_t* obamaImg = lv_img_create(obamaScr, nullptr);
   lv_img_set_src(obamaImg, &obama);
   lv_obj_align(obamaImg, nullptr, LV_ALIGN_CENTER, 0, 0);
-  lv_scr_load(obamaScr);
+  if (mode != 0) lv_scr_load(obamaScr);
 }

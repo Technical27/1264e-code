@@ -32,7 +32,9 @@ void clawControl (void*) {
 
 // Controls motors by joysticks
 void opcontrol () {
+  mode = 2;
   debugLog("Starting Driver Control\n");
+  loadObama();
   pros::Task clawTask (clawControl, nullptr, "claw");
   while (true) {
     chassis.tank(mainController.getAnalog(ControllerAnalog::leftY), mainController.getAnalog(ControllerAnalog::rightY));

@@ -23,13 +23,15 @@ ChassisControllerIntegrated chassis = ChassisControllerFactory::create(left, rig
 
 Controller mainController (ControllerId::master);
 
+mode = 0;
+
 void initialize () {
   pros::Task screenTask (screenControl, nullptr, "screen");
   claw.setBrakeMode(AbstractMotor::brakeMode::hold);
 }
 
 void disabled () {
-  if (errorArea != nullptr) debugLog("Robot Disabled\n");
+  debugLog("Robot Disabled\n");
 }
 
 void competition_initialize () {}
