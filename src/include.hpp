@@ -44,3 +44,6 @@ void debugLog (const char* text);
 
 // Obama image
 void loadObama ();
+
+// Main screen
+void loadMain ();

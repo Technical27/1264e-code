@@ -23,7 +23,7 @@ ChassisControllerIntegrated chassis = ChassisControllerFactory::create(left, rig
 
 Controller mainController (ControllerId::master);
 
-mode = 0;
+int mode = 0;
 
 void initialize () {
   pros::Task screenTask (screenControl, nullptr, "screen");
@@ -32,6 +32,7 @@ void initialize () {
 
 void disabled () {
   debugLog("Robot Disabled\n");
+  loadMain();
 }
 
 void competition_initialize () {}
