@@ -7,10 +7,6 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 #include "main.h"
-#include <memory>
-#include <vector>
-#include <cstdio>
-#include <cstring>
 
 // Individual motors
 extern Motor frontLeft;
