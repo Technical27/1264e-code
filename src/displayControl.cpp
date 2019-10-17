@@ -103,7 +103,7 @@ const char* autonSides[] = {"Left", "Right"};
 void initStyle () {
   lv_style_copy(&mainStyle, &lv_style_plain);
 
-  mainStyle.body.border.color = LV_COLOR_MAKE(0xEB, 0x8D, 0x00);
+  mainStyle.body.border.color = LV_COLOR_MAKE(0xFF, 0x7B, 0x00);
   mainStyle.body.border.width = 3;
   mainStyle.body.border.part = LV_BORDER_FULL;
   mainStyle.body.radius = 10;
@@ -111,7 +111,7 @@ void initStyle () {
   mainStyle.body.main_color = LV_COLOR_BLACK;
   mainStyle.body.grad_color = mainStyle.body.main_color;
 
-  mainStyle.text.color = LV_COLOR_WHITE;
+  mainStyle.text.color = LV_COLOR_MAKE(0xFF, 0x7B, 0x00);
 }
 
 void debugLog (const char* text) {
