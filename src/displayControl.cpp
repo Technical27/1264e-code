@@ -77,7 +77,7 @@ void initStyle () {
   mainStyle.body.border.part = LV_BORDER_FULL;
   mainStyle.body.radius = 10;
 
-  mainStyle.body.main_color = LV_COLOR_MAKE(0x00, 0x00, 0x00);
+  mainStyle.body.main_color = LV_COLOR_BLACK;
   mainStyle.body.grad_color = mainStyle.body.main_color;
 
   mainStyle.text.color = LV_COLOR_BLACK;
