@@ -31,7 +31,11 @@ int lastScrChange = pros::millis();
     return LV_RES_OK; \
   }
 
-#define CreateScr(scr) scr = lv_obj_create(nullptr, nullptr);
+#define CreateScr(scr) \
+  scr = lv_obj_create(nullptr, nullptr); \
+  lv_obj_set_style(scr, &mainStyle);
+
+lv_style_t mainStyle;
 
 LV_IMG_DECLARE(obama)
 lv_obj_t* obamaImg;
@@ -42,6 +46,7 @@ lv_obj_t* errorArea;
 lv_obj_t* scr;
 lv_obj_t* dbg;
 lv_obj_t* auton;
+lv_obj_t* obamaScr;
 
 DefineBtn(dbgToMain)
 DefineBtn(mainToDbg)
@@ -63,6 +68,20 @@ const char* autonModes[] = {"Off", "Blue", "Red", "Skills"};
 
 int currentSide = 0;
 const char* autonSides[] = {"Left", "Right"};
+
+void initStyle () {
+  lv_style_copy(&mainStyle, &lv_style_plain);
+
+  mainStyle.body.border.color = LV_COLOR_MAKE(0xEB, 0x8D, 0x00);
+  mainStyle.body.border.width = 3;
+  mainStyle.body.border.part = LV_BORDER_FULL;
+  mainStyle.body.radius = 10;
+
+  mainStyle.body.main_color = LV_COLOR_MAKE(0x00, 0x00, 0x00);
+  mainStyle.body.grad_color = mainStyle.body.main_color;
+
+  mainStyle.text.color = LV_COLOR_BLACK;
+}
 
 lv_res_t autonModeHandle (lv_obj_t*, lv_signal_t e, void*) {
   if (e == LV_SIGNAL_PRESSED && lastScrChange + 100 < pros::millis()) {
@@ -89,7 +108,12 @@ void loadObama () {
   if (obamaScr != nullptr) lv_scr_load(obamaScr);
 }
 
+void loadMain () {
+  if (scr != nullptr) lv_scr_load(scr);
+}
+
 void screenControl (void*) {
+  initStyle();
   CreateScr(scr)
   CreateScr(dbg)
   CreateScr(auton)
@@ -123,7 +147,7 @@ void screenControl (void*) {
   lv_ta_set_text(errorArea, "");
   lv_ta_set_cursor_type(errorArea, LV_CURSOR_NONE);
 
-  debugLog(buf);
+  debugLog(buf.c_str());
   debugLog("Finished Initalizing Display\n");
 
   lv_obj_t* obamaImg = lv_img_create(obamaScr, nullptr);
