@@ -10,6 +10,9 @@
 
 int lastScrChange = pros::millis();
 
+int currentAuton = 0;
+int autonMode = 0;
+
 #define DefineBtn(name) \
   lv_obj_t* name; \
   lv_obj_t* name##Label;
@@ -53,9 +56,27 @@ int lastScrChange = pros::millis();
   lv_obj_align(name##Label, name, LV_ALIGN_CENTER, 0, 0); \
   lv_obj_align(name, nullptr, LV_ALIGN_IN_BOTTOM_RIGHT, 0, 0); \
   lv_obj_set_style(name, &mainStyle); \
-  lv_obj_set_signal_func(name, name##Handle); 
+  lv_obj_set_signal_func(name, name##Handle);
 
-lv_style_t mainStyle;
+lv_obj_t* selectedAutonBtn;
+
+#define CreateAutonHandle(scr, mode, number) \
+  lv_res_t scr##number##Handle (lv_obj_t* btn, lv_signal_t e, void*) { \
+    if (e == LV_SIGNAL_PRESSED) { \
+      currentAuton = number; \
+      autonMode = mode; \
+      if (selectedAutonBtn != nullptr) lv_obj_set_style(selectedAutonBtn, &mainStyle); \
+      lv_obj_set_style(btn, &selectedAutonStyle); \
+      selectedAutonBtn = btn; \
+    } \
+  }
+
+#define CreateAuton(scr, number, align) \
+  CreateBtn(scr##number, scr, nullptr, #number, LV_HOR_RES/2, LV_VER_RES/2) \
+  lv_obj_set_signal_func(scr##number, scr##number##Handle); \
+  lv_obj_align(scr##number, nullptr, align, 0, 0); \
+
+lv_style_t mainStyle, selectedAutonStyle;
 
 LV_IMG_DECLARE(obama)
 
@@ -81,6 +102,8 @@ DefineBtn(autonRedBack)
 DefineBtn(autonBlueBack)
 DefineBtn(autonSkillsBack)
 
+DefineBtn(autonRedScr1);
+
 CreateBtnHandle(dbgToMain, scr)
 CreateBtnHandle(mainToDbg, dbg)
 
@@ -90,15 +113,12 @@ CreateAutonScrHandle(autonRed)
 CreateAutonScrHandle(autonBlue)
 CreateAutonScrHandle(autonSkills)
 
+CreateAutonHandle(autonRedScr, 1, 1)
+
 CreateBtnHandle(autonBlueBack, scr)
 CreateBtnHandle(autonRedBack, scr)
 CreateBtnHandle(autonSkillsBack, scr)
 
-int currentAuton = 1;
-const char* autonModes[] = {"Off", "Blue", "Red", "Skills"};
-
-int currentSide = 0;
-const char* autonSides[] = {"Left", "Right"};
 
 void initStyle () {
   lv_style_copy(&mainStyle, &lv_style_plain);
@@ -112,6 +132,10 @@ void initStyle () {
   mainStyle.body.grad_color = mainStyle.body.main_color;
 
   mainStyle.text.color = LV_COLOR_MAKE(0xFF, 0x7B, 0x00);
+
+  lv_style_copy(&selectedAutonStyle, &mainStyle);
+
+  selectedAutonStyle.text.color = LV_COLOR_BLACK;
 }
 
 void debugLog (const char* text) {
@@ -136,6 +160,8 @@ void screenControl (void*) {
   CreateScr(autonBlueScr)
   CreateScr(autonRedScr)
   CreateScr(autonSkillsScr)
+
+  CreateAuton(autonRedScr, 1, LV_ALIGN_IN_TOP_LEFT)
 
   lv_scr_load(scr);
 
