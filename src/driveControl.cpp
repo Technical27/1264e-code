@@ -15,15 +15,15 @@ void clawControl (void*) {
   bool cooldownPassed;
   while (true) {
     cooldownPassed = time - ptime > 500;
-    if (mainController.getDigital(ControllerDigital::A) && cooldownPassed && !on) {
+    if (mainController.getDigital(ControllerDigital::R2) && cooldownPassed && !on) {
       ptime = pros::millis();
       on = true;
-      claw.moveRelative(1300, 600);
+      claw.moveRelative(740, 600);
     }
-    else if (mainController.getDigital(ControllerDigital::B) && cooldownPassed && on) {
+    else if (mainController.getDigital(ControllerDigital::R1) && cooldownPassed && on) {
       ptime = pros::millis();
       on = false;
-      claw.moveRelative(-1300, 600);
+      claw.moveRelative(-740, 600);
     }
     time = pros::millis();
     pros::Task::delay(10);
@@ -37,7 +37,7 @@ void opcontrol () {
   loadObama();
   pros::Task clawTask (clawControl, nullptr, "claw");
   while (true) {
-    chassis.tank(mainController.getAnalog(ControllerAnalog::leftY), mainController.getAnalog(ControllerAnalog::rightY));
+    chassis.tank(mainController.getAnalog(ControllerAnalog::leftY) * 0.75, mainController.getAnalog(ControllerAnalog::rightY) * 0.75);
     pros::Task::delay(10);
   }
 }

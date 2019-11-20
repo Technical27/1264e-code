@@ -19,4 +19,5 @@ void autonomous () {
   else if (currentAuton != 0) {
     debugLog("Starting Normal auton\n");
   }
+  claw.moveRelative(1480, 600);
 }

@@ -62,12 +62,14 @@ lv_obj_t* selectedAutonBtn;
 
 #define CreateAutonHandle(scr, mode, number) \
   lv_res_t scr##number##Handle (lv_obj_t* btn, lv_signal_t e, void*) { \
-    if (e == LV_SIGNAL_PRESSED) { \
+    if (e == LV_SIGNAL_PRESSED && lastScrChange + 100 < pros::millis()) { \
       currentAuton = number; \
       autonMode = mode; \
       if (selectedAutonBtn != nullptr) lv_obj_set_style(selectedAutonBtn, &mainStyle); \
       lv_obj_set_style(btn, &selectedAutonStyle); \
       selectedAutonBtn = btn; \
+      lastScrChange = pros::millis(); \
+      return LV_RES_OK; \
     } \
   }
 
@@ -103,6 +105,7 @@ DefineBtn(autonBlueBack)
 DefineBtn(autonSkillsBack)
 
 DefineBtn(autonRedScr1);
+DefineBtn(autonRedScr2);
 
 CreateBtnHandle(dbgToMain, scr)
 CreateBtnHandle(mainToDbg, dbg)
@@ -114,6 +117,7 @@ CreateAutonScrHandle(autonBlue)
 CreateAutonScrHandle(autonSkills)
 
 CreateAutonHandle(autonRedScr, 1, 1)
+CreateAutonHandle(autonRedScr, 2, 2)
 
 CreateBtnHandle(autonBlueBack, scr)
 CreateBtnHandle(autonRedBack, scr)
@@ -135,7 +139,7 @@ void initStyle () {
 
   lv_style_copy(&selectedAutonStyle, &mainStyle);
 
-  selectedAutonStyle.text.color = LV_COLOR_BLACK;
+  selectedAutonStyle.text.color = LV_COLOR_GRAY;
 }
 
 void debugLog (const char* text) {
@@ -162,6 +166,7 @@ void screenControl (void*) {
   CreateScr(autonSkillsScr)
 
   CreateAuton(autonRedScr, 1, LV_ALIGN_IN_TOP_LEFT)
+  CreateAuton(autonRedScr, 2, LV_ALIGN_IN_TOP_RIGHT)
 
   lv_scr_load(scr);
 
