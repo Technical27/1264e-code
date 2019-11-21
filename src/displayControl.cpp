@@ -107,6 +107,8 @@ DefineBtn(autonSkillsBack)
 DefineBtn(autonRedScr1);
 DefineBtn(autonRedScr2);
 
+DefineBtn(obamaBtn);
+
 CreateBtnHandle(dbgToMain, scr)
 CreateBtnHandle(mainToDbg, dbg)
 
@@ -148,11 +150,22 @@ void debugLog (const char* text) {
 }
 
 void loadObama () {
-  if (obamaScr != nullptr) lv_scr_load(obamaScr);
+  if (obamaScr != nullptr) {
+    pros::Task::delay(100);
+    lv_scr_load(obamaScr);
+  }
 }
 
 void loadMain () {
   if (scr != nullptr) lv_scr_load(scr);
+}
+
+lv_res_t obamaBtnHandle (lv_obj_t*, lv_signal_t e, void*) {
+  if (lastScrChange + 100 < pros::millis() && e == LV_SIGNAL_PRESSING) {
+    loadObama();
+    lastScrChange = pros::millis();
+  }
+  return LV_RES_OK;
 }
 
 void screenControl (void*) {
@@ -209,5 +222,8 @@ void screenControl (void*) {
   lv_obj_align(obamaImg2, nullptr, LV_ALIGN_IN_TOP_RIGHT, 0, 0);
   lv_obj_set_signal_func(obamaImg2, obamaToMainHandle);
 
-  if (mode != 0) lv_scr_load(obamaScr);
+  CreateBtn(obamaBtn, dbg, nullptr, "Obama", LV_HOR_RES/4, LV_VER_RES/4);
+  lv_obj_align(obamaBtn, nullptr, LV_ALIGN_IN_TOP_RIGHT, 0, 0);
+
+  if (mode != 0) loadObama();
 }
