@@ -11,13 +11,21 @@
 void autonomous () {
   mode = 1;
   loadObama();
-  // Skills
-  if (currentAuton == 3) {
-    debugLog("Starting skills auton\n");
+  // red auton
+  if (autonMode == 1) {
+    debugLog("Starting red auton\n");
+    if (currentAuton == 1) {
+      chassis.moveDistance(700);
+      chassis.moveDistance(-700);
+    }
   }
-  // Blue and red autons
-  else if (currentAuton != 0) {
-    debugLog("Starting Normal auton\n");
+  // blue auton
+  else if (autonMode == 2) {
+    debugLog("Starting blue auton\n");
+  }
+  // skills
+  else if (autonMode == 3) {
+    debugLog("Starting skills auton\n");
   }
   claw.moveRelative(1480, 600);
 }

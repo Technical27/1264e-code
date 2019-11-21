@@ -119,7 +119,7 @@ CreateAutonScrHandle(autonBlue)
 CreateAutonScrHandle(autonSkills)
 
 CreateAutonHandle(autonRedScr, 1, 1)
-CreateAutonHandle(autonRedScr, 2, 2)
+CreateAutonHandle(autonRedScr, 1, 2)
 
 CreateBtnHandle(autonBlueBack, scr)
 CreateBtnHandle(autonRedBack, scr)
@@ -209,7 +209,7 @@ void screenControl (void*) {
   lv_ta_set_text(errorArea, "");
   lv_ta_set_cursor_type(errorArea, LV_CURSOR_NONE);
 
-  debugLog(buf.c_str());
+  if (buf.length() > 0) debugLog(buf.c_str());
   debugLog("Finished Initalizing Display\n");
 
   lv_obj_t* obamaImg1 = lv_imgbtn_create(obamaScr, nullptr);

@@ -27,7 +27,7 @@ extern Controller mainController;
 
 // Current selected auton
 extern int currentAuton;
-extern int currentSide;
+extern int autonMode;
 
 // Current mode
 extern int mode;
