@@ -172,7 +172,7 @@ void screenControl (void*) {
   CreateBtn(obamaBtn, dbg, nullptr, "Obama", LV_HOR_RES/4, LV_VER_RES/4);
   lv_obj_align(obamaBtn, nullptr, LV_ALIGN_IN_TOP_RIGHT, 0, 0);
 
-  CreateBtn(obamaBtn, dbg, nullptr, "Auton", LV_HOR_RES/4, LV_VER_RES/4);
+  CreateBtn(autonBtn, dbg, nullptr, "Auton", LV_HOR_RES/4, LV_VER_RES/4);
   lv_obj_align(autonBtn, nullptr, LV_ALIGN_IN_TOP_MID, 0, 0);
 
   if (mode != 0) loadObama();
