@@ -54,14 +54,22 @@
 #define CreateAutonHandle(scr, mode, number) \
   lv_res_t scr##number##Handle (lv_obj_t* btn, lv_signal_t e, void*) { \
     if (e == LV_SIGNAL_PRESSED && lastScrChange + 100 < pros::millis()) { \
-      currentAuton = number; \
-      autonMode = mode; \
-      if (selectedAutonBtn != nullptr) lv_obj_set_style(selectedAutonBtn, &mainStyle); \
-      lv_obj_set_style(btn, &selectedAutonStyle); \
-      selectedAutonBtn = btn; \
+      if (btn == selectedAutonBtn) { \
+        currentAuton = 0; \
+        autonMode = 0; \
+        lv_obj_set_style(btn, &mainStyle); \
+        selectedAutonBtn = nullptr; \
+      } \
+      else { \
+        currentAuton = number; \
+        autonMode = mode; \
+        if (selectedAutonBtn != nullptr) lv_obj_set_style(selectedAutonBtn, &mainStyle); \
+        lv_obj_set_style(btn, &selectedAutonStyle); \
+        selectedAutonBtn = btn; \
+      } \
       lastScrChange = pros::millis(); \
-      return LV_RES_OK; \
     } \
+    return LV_RES_OK; \
   }
 
 #define CreateAuton(scr, number, align) \
