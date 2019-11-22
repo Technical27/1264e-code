@@ -43,3 +43,6 @@ void loadObama ();
 
 // Main screen
 void loadMain ();
+
+// auton
+void auton ();

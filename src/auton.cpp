@@ -8,7 +8,7 @@
 */
 #include "include.hpp"
 
-void autonomous () {
+void auton () {
   mode = 1;
   loadObama();
   // red auton
@@ -29,3 +29,5 @@ void autonomous () {
   }
   claw.moveRelative(1480, 600);
 }
+
+void autonomous () {auton();}
