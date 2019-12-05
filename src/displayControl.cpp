@@ -109,7 +109,7 @@ lv_res_t obamaBtnHandle (lv_obj_t*, lv_signal_t e, void*) {
 
 lv_res_t autonBtnHandle (lv_obj_t*, lv_signal_t e, void*) {
   if (lastScrChange + 100 < pros::millis() && e == LV_SIGNAL_PRESSING && !pros::competition::is_connected()) {
-    auton();
+    pros::Task autonTask (auton, nullptr, "auton");
     lastScrChange = pros::millis();
   }
   return LV_RES_OK;

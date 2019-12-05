@@ -25,6 +25,8 @@ Controller mainController (ControllerId::master);
 
 int mode = 0;
 
+pros::Mutex motorMutex;
+
 void initialize () {
   pros::Task screenTask (screenControl, nullptr, "screen");
   claw.setBrakeMode(AbstractMotor::brakeMode::hold);

@@ -45,4 +45,6 @@ void loadObama ();
 void loadMain ();
 
 // auton
-void auton ();
+void auton (void*);
+
+extern pros::Mutex motorMutex;

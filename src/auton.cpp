@@ -8,9 +8,10 @@
 */
 #include "include.hpp"
 
-void auton () {
+void auton (void*) {
   mode = 1;
   loadObama();
+  motorMutex.take(20);
   // red auton
   if (autonMode == 1) {
     debugLog("Starting red auton\n");
@@ -28,6 +29,7 @@ void auton () {
     debugLog("Starting skills auton\n");
   }
   claw.moveRelative(1480, 600);
+  motorMutex.give();
 }
 
-void autonomous () {auton();}
+void autonomous () {auton(nullptr);}

@@ -37,7 +37,11 @@ void opcontrol () {
   loadObama();
   pros::Task clawTask (clawControl, nullptr, "claw");
   while (true) {
-    chassis.tank(mainController.getAnalog(ControllerAnalog::leftY) * 0.75, mainController.getAnalog(ControllerAnalog::rightY) * 0.75);
+    if (motorMutex.take(0)) {
+      motorMutex.take(5);
+      chassis.tank(mainController.getAnalog(ControllerAnalog::leftY) * 0.75, mainController.getAnalog(ControllerAnalog::rightY) * 0.75);
+      motorMutex.give();
+    }
     pros::Task::delay(10);
   }
 }
