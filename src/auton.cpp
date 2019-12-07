@@ -7,6 +7,25 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 #include "include.hpp"
+// random auton
+/*chassis.moveDistance(700);
+claw.moveRelative(2140, 600);
+pros::Task::delay(10);
+while (!claw.isStopped()) pros::Task::delay(10);
+chassis.moveDistance(-700);
+chassis.turnAngle(-90);
+chassis.moveDistance(500);
+closeClaw();
+chassis.moveDistance(-500);
+chassis.turnAngle(90);
+chassis.moveDistance(800);
+openClaw();
+chassis.moveDistance(-800);
+chassis.turnAngle(-90);
+chassis.moveDistance(500);
+closeClaw();
+chassis.moveDistance(-500);
+chassis.turnAngle(90);*/
 
 void openClaw() {
   claw.moveRelative(740, 600);
@@ -33,24 +52,16 @@ void auton (void*) {
       claw.moveRelative(1480, 600);
     }
     else if (currentAuton == 2) {
-      /*chassis.moveDistance(700);
-      claw.moveRelative(2140, 600);
-      pros::Task::delay(10);
-      while (!claw.isStopped()) pros::Task::delay(10);
+      // should get 2 cubes
+      chassis.moveDistance(700);
       chassis.moveDistance(-700);
-      chassis.turnAngle(-90);
-      chassis.moveDistance(500);
-      closeClaw();
-      chassis.moveDistance(-500);
-      chassis.turnAngle(90);
+      chassis.turnAngle(-200);
+      chassis.moveDistance(-50);
+      chassis.moveDistance(700);
+      chassis.turnAngle(250);
       chassis.moveDistance(800);
-      openClaw();
-      chassis.moveDistance(-800);
-      chassis.turnAngle(-90);
-      chassis.moveDistance(500);
-      closeClaw();
-      chassis.moveDistance(-500);
-      chassis.turnAngle(90);*/
+      chassis.moveDistance(-700);
+      claw.moveRelative(1480, 600);
     }
   }
   // blue auton
