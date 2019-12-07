@@ -11,8 +11,8 @@
 
 int lastScrChange = pros::millis();
 
-int currentAuton = 0;
-int autonMode = 0;
+int currentAuton = 1;
+int autonMode = 1;
 
 lv_obj_t* selectedAutonBtn;
 
