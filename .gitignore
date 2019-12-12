@@ -1,3 +1,8 @@
+# pros files
 /bin
 temp.log
 /.d
+# editor files
+**/*@neomake
+**/*.gch
+.lvimrc
