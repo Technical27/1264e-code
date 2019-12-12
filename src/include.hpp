@@ -15,6 +15,8 @@ extern Motor backLeft;
 extern Motor backRight;
 extern Motor claw;
 
+extern AsyncPosIntegratedController clawController;
+
 // Left and right motor groups
 extern MotorGroup left;
 extern MotorGroup right;

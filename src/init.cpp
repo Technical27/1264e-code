@@ -15,6 +15,7 @@ Motor backLeft (14, true, AbstractMotor::gearset::green);
 Motor backRight (10, false, AbstractMotor::gearset::green);
 
 Motor claw (1, true, AbstractMotor::gearset::green);
+AsyncPosIntegratedController clawController = AsyncControllerFactory::posIntegrated(claw);
 
 MotorGroup left ({frontLeft, backLeft});
 MotorGroup right ({frontRight, backRight});
