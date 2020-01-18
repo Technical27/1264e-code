@@ -2,6 +2,8 @@
 /bin
 temp.log
 /.d
+/firmware
+/include
 # editor files
 **/*@neomake
 **/*.gch

@@ -9,13 +9,19 @@
 #include "include.hpp"
 
 // Variable definitions
-Motor frontLeft (16, true, AbstractMotor::gearset::green);
-Motor frontRight (8, false, AbstractMotor::gearset::green);
-Motor backLeft (14, true, AbstractMotor::gearset::green);
-Motor backRight (10, false, AbstractMotor::gearset::green);
+Motor frontLeft (1, true, AbstractMotor::gearset::green);
+Motor frontRight (2, false, AbstractMotor::gearset::green);
+Motor backLeft (3, true, AbstractMotor::gearset::green);
+Motor backRight (4, false, AbstractMotor::gearset::green);
 
-Motor claw (1, true, AbstractMotor::gearset::green);
-AsyncPosIntegratedController clawController = AsyncControllerFactory::posIntegrated(claw);
+Motor tray (5, false, AbstractMotor::gearset::red);
+AsyncPosIntegratedController trayController = AsyncControllerFactory::posIntegrated(tray);
+
+Motor lift (6, true, AbstractMotor::gearset::red);
+AsyncPosIntegratedController liftController = AsyncControllerFactory::posIntegrated(lift);
+
+Motor liftLeft(7, false, AbstractMotor::gearset::green);
+Motor liftRight(8, true, AbstractMotor::gearset::green);
 
 MotorGroup left ({frontLeft, backLeft});
 MotorGroup right ({frontRight, backRight});
@@ -30,7 +36,8 @@ pros::Mutex motorMutex;
 
 void initialize () {
   pros::Task screenTask (screenControl, nullptr, "screen");
-  claw.setBrakeMode(AbstractMotor::brakeMode::hold);
+  tray.setBrakeMode(AbstractMotor::brakeMode::hold);
+  lift.setBrakeMode(AbstractMotor::brakeMode::hold);
 }
 
 void disabled () {

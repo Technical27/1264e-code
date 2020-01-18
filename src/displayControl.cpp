@@ -126,6 +126,10 @@ void screenControl (void*) {
   CreateScr(autonSkillsScr)
 
   CreateAuton(autonRedScr, 1, LV_ALIGN_IN_TOP_LEFT)
+
+  lv_obj_set_style(autonRedScr1, &selectedAutonStyle);
+  selectedAutonBtn = autonRedScr1;
+
   CreateAuton(autonRedScr, 2, LV_ALIGN_IN_TOP_RIGHT)
 
   lv_scr_load(scr);
@@ -150,7 +154,7 @@ void screenControl (void*) {
   CreateAutonBackToMain(autonSkillsBack, autonSkillsScr);
 
   errorArea = lv_ta_create(dbg, nullptr);
- 
+
   lv_obj_set_size(errorArea, LV_HOR_RES, LV_VER_RES);
   lv_obj_align(errorArea, nullptr, LV_ALIGN_IN_TOP_LEFT, 0, LV_VER_RES/4);
   lv_ta_set_text(errorArea, "");

@@ -8,25 +8,53 @@
 */
 #include "include.hpp"
 
-void clawControl (void*) {
+void trayControl (void*) {
   bool on = false;
   int time = pros::millis();
   int ptime = pros::millis();
   bool cooldownPassed;
   while (true) {
     cooldownPassed = time - ptime > 500;
-    if (mainController.getDigital(ControllerDigital::R2) && cooldownPassed && !on) {
+    if (cooldownPassed && mainController.getDigital(ControllerDigital::B)) {
       ptime = pros::millis();
-      on = true;
-      claw.moveRelative(740, 600);
-    }
-    else if (mainController.getDigital(ControllerDigital::R1) && cooldownPassed && on) {
-      ptime = pros::millis();
-      on = false;
-      claw.moveRelative(-740, 600);
+      tray.moveRelative(on ? 740 : -740, 600);
+      on = !on;
     }
     time = pros::millis();
-    pros::Task::delay(10);
+    pros::Task::delay(50);
+  }
+}
+
+void liftControl (void*) {
+  while (true) {
+    if (mainController.getDigital(ControllerDigital::R2)) {
+      lift.move(127);
+    }
+    else if (mainController.getDigital(ControllerDigital::R1)) {
+      lift.move(-127);
+    }
+    else {
+      lift.move(0);
+    }
+    pros::Task::delay(50);
+  }
+}
+
+void liftArmControl (void*) {
+  while (true) {
+    if (mainController.getDigital(ControllerDigital::L2)) {
+      liftLeft.move(127);
+      liftRight.move(127);
+    }
+    else if (mainController.getDigital(ControllerDigital::L1)) {
+      liftLeft.move(-127);
+      liftRight.move(-127);
+    }
+    else {
+      liftLeft.move(0);
+      liftRight.move(0);
+    }
+    pros::Task::delay(50);
   }
 }
 
@@ -35,11 +63,14 @@ void opcontrol () {
   mode = 2;
   debugLog("Starting Driver Control\n");
   loadObama();
-  pros::Task clawTask (clawControl, nullptr, "claw");
+  pros::Task trayTask (trayControl, nullptr, "tray");
+  pros::Task liftTask (liftControl, nullptr, "lift");
+  pros::Task liftArmTask (liftArmControl, nullptr, "liftArm");
+  motorMutex.give();
   while (true) {
     if (motorMutex.take(0)) {
       motorMutex.take(5);
-      chassis.tank(mainController.getAnalog(ControllerAnalog::leftY) * 0.75, mainController.getAnalog(ControllerAnalog::rightY) * 0.75);
+      chassis.tank(mainController.getAnalog(ControllerAnalog::leftY), mainController.getAnalog(ControllerAnalog::rightY));
       motorMutex.give();
     }
     pros::Task::delay(10);

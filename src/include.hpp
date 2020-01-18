@@ -13,9 +13,15 @@ extern Motor frontLeft;
 extern Motor frontRight;
 extern Motor backLeft;
 extern Motor backRight;
-extern Motor claw;
 
-extern AsyncPosIntegratedController clawController;
+extern Motor tray;
+extern Motor lift;
+
+extern Motor liftLeft;
+extern Motor liftRight;
+
+extern AsyncPosIntegratedController trayController;
+extern AsyncPosIntegratedController liftController;
 
 // Left and right motor groups
 extern MotorGroup left;
