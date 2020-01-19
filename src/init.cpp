@@ -9,24 +9,24 @@
 #include "include.hpp"
 
 // Variable definitions
-Motor frontLeft (1, true, AbstractMotor::gearset::green);
-Motor frontRight (2, false, AbstractMotor::gearset::green);
-Motor backLeft (3, true, AbstractMotor::gearset::green);
-Motor backRight (4, false, AbstractMotor::gearset::green);
+Motor frontLeft (1, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
+Motor frontRight (2, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
+Motor backLeft (3, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
+Motor backRight (4, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
 
-Motor tray (5, false, AbstractMotor::gearset::red);
-AsyncPosIntegratedController trayController = AsyncControllerFactory::posIntegrated(tray);
+Motor tray (5, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees);
+std::shared_ptr<AsyncPositionController<double, double>> trayController = AsyncPosControllerBuilder().withMotor(tray).build();
 
-Motor lift (6, true, AbstractMotor::gearset::red);
-AsyncPosIntegratedController liftController = AsyncControllerFactory::posIntegrated(lift);
+Motor lift (6, true, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees);
+std::shared_ptr<AsyncPositionController<double, double>> liftController = AsyncPosControllerBuilder().withMotor(lift).build();
 
-Motor liftLeft(7, false, AbstractMotor::gearset::green);
-Motor liftRight(8, true, AbstractMotor::gearset::green);
+Motor liftLeft(7, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
+Motor liftRight(8, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
 
 MotorGroup left ({frontLeft, backLeft});
 MotorGroup right ({frontRight, backRight});
 
-ChassisControllerIntegrated chassis = ChassisControllerFactory::create(left, right, AbstractMotor::gearset::green);
+std::shared_ptr<ChassisController> chassis = ChassisControllerBuilder().withMotors(left, right).build();
 
 Controller mainController (ControllerId::master);
 

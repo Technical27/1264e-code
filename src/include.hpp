@@ -20,15 +20,15 @@ extern Motor lift;
 extern Motor liftLeft;
 extern Motor liftRight;
 
-extern AsyncPosIntegratedController trayController;
-extern AsyncPosIntegratedController liftController;
+extern std::shared_ptr<AsyncPositionController<double, double>> trayController;
+extern std::shared_ptr<AsyncPositionController<double, double>> liftController;
 
 // Left and right motor groups
 extern MotorGroup left;
 extern MotorGroup right;
 
 // Chassis
-extern ChassisControllerIntegrated chassis;
+extern std::shared_ptr<ChassisController> chassis;
 
 // The main controller
 extern Controller mainController;

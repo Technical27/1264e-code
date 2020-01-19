@@ -28,13 +28,13 @@ void trayControl (void*) {
 void liftControl (void*) {
   while (true) {
     if (mainController.getDigital(ControllerDigital::R2)) {
-      lift.move(127);
+      lift.moveVoltage(12000);
     }
     else if (mainController.getDigital(ControllerDigital::R1)) {
-      lift.move(-127);
+      lift.moveVoltage(-12000);
     }
     else {
-      lift.move(0);
+      lift.moveVoltage(0);
     }
     pros::Task::delay(50);
   }
@@ -43,16 +43,16 @@ void liftControl (void*) {
 void liftArmControl (void*) {
   while (true) {
     if (mainController.getDigital(ControllerDigital::L2)) {
-      liftLeft.move(127);
-      liftRight.move(127);
+      liftLeft.moveVoltage(12000);
+      liftRight.moveVoltage(12000);
     }
     else if (mainController.getDigital(ControllerDigital::L1)) {
-      liftLeft.move(-127);
-      liftRight.move(-127);
+      liftLeft.moveVoltage(-12000);
+      liftRight.moveVoltage(-12000);
     }
     else {
-      liftLeft.move(0);
-      liftRight.move(0);
+      liftLeft.moveVoltage(0);
+      liftRight.moveVoltage(0);
     }
     pros::Task::delay(50);
   }
@@ -70,7 +70,10 @@ void opcontrol () {
   while (true) {
     if (motorMutex.take(0)) {
       motorMutex.take(5);
-      chassis.tank(mainController.getAnalog(ControllerAnalog::leftY), mainController.getAnalog(ControllerAnalog::rightY));
+      chassis->getModel()->tank(
+        mainController.getAnalog(ControllerAnalog::leftY),
+        mainController.getAnalog(ControllerAnalog::rightY)
+      );
       motorMutex.give();
     }
     pros::Task::delay(10);

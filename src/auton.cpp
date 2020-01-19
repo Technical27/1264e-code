@@ -16,8 +16,8 @@ void auton (void*) {
   if (autonMode == 1) {
     debugLog("Starting red auton\n");
     if (currentAuton == 1) {
-      chassis.moveDistance(700);
-      chassis.moveDistance(-700);
+      chassis->moveRaw(700);
+      chassis->moveRaw(-700);
     }
   }
   // blue auton
